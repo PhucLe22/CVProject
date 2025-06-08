@@ -24,9 +24,12 @@
     "url": "https://github.com/PhucLe22/NodeJS/issues"
   },
   "homepage": "https://github.com/PhucLe22/NodeJS#readme",
-  "lint-staged": {
-    "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
-  },
+"lint-staged": {
+  "src/**/*.{js,json,scss}": [
+    "prettier --single-quote --trailing-comma all --tab-width 4 --write",
+    "git add"
+  ]
+},
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
