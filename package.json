@@ -7,7 +7,8 @@
     "start": "nodemon --inspect src/index.js",
     "sass": "sass --watch src/resources/scss/ --output src/public/css/ --no-source-map",
     "sass:watch": "sass --watch src/resources/scss/app.scss:src/public/css/app.css --no-source-map",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -23,15 +24,15 @@
     "url": "https://github.com/PhucLe22/NodeJS/issues"
   },
   "homepage": "https://github.com/PhucLe22/NodeJS#readme",
-    "lint-staged": {
-      "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
-    },
-"husky": {
-  "hooks": {
-    "pre-commit": "lint-staged"
-  }
-},
-    "dependencies": {
+  "lint-staged": {
+    "src/**/*.{js,json,scss}": "prettier --single-quote --trailing-comma all --tab-width 4 --write"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
     "express": "^5.1.0",
     "express-handlebars": "^8.0.3"
   },
