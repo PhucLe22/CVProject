@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "format": "lint-staged",
+    "format": "prettier --write 'src/**/*.{js,json,scss}'",
     "start": "nodemon --inspect src/index.js",
     "sass": "sass --watch src/resources/scss/ --output src/public/css/ --no-source-map",
     "sass:watch": "sass --watch src/resources/scss/app.scss:src/public/css/app.css --no-source-map",
