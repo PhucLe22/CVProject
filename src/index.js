@@ -26,7 +26,7 @@ app.engine(
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources/views')); //_dirname == contextPath
 
-          route(app);
-app.listen(port, () => {
+route(app);
+  app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
