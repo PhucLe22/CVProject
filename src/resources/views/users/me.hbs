@@ -1,0 +1,15 @@
+<h1>Thông tin người dùng</h1>
+
+<div class="user-profile">
+  <div class="avatar">
+    <img src="{{user.ava}}" alt="Ảnh đại diện" width="150" height="150">
+  </div>
+
+  <ul class="user-info">
+    <li><strong>Tên người dùng:</strong> {{user.username}}</li>
+    <li><strong>Email:</strong> {{user.email}}</li>
+    <li><strong>Số điện thoại:</strong> {{user.phonenumber}}</li>
+    <li><strong>Chuyên ngành:</strong> {{user.major}}</li>
+    <li><strong>Ngày sinh:</strong> {{formatDate user.brithday}}</li>
+  </ul>
+</div>

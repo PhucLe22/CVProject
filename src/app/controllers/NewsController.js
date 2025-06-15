@@ -11,4 +11,4 @@ class NewsController {
 
 module.exports = new NewsController();
 
-const newsController = require('./NewsController');
+// const newsController = require('./NewsController');

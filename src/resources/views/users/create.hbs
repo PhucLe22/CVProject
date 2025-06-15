@@ -1,0 +1,23 @@
+<form action="/users/store" method="POST">
+  <h2>Thêm người dùng mới</h2>
+
+  <label for="username">Tên người dùng:</label><br>
+  <input type="text" id="username" name="username" required minlength="1" maxlength="255"><br><br>
+
+  <label for="ava">Link ảnh đại diện (ava):</label><br>
+  <input type="text" id="ava" name="ava"><br><br>
+
+  <label for="email">Email:</label><br>
+  <input type="email" id="email" name="email" required><br><br>
+
+  <label for="phonenumber">Số điện thoại:</label><br>
+  <input type="text" id="phonenumber" name="phonenumber"><br><br>
+
+  <label for="major">Chuyên ngành:</label><br>
+  <input type="text" id="major" name="major"><br><br>
+
+  <label for="birthday">Ngày sinh:</label><br>
+  <input type="date" id="birthday" name="birthday"><br><br>
+
+  <button type="submit">Tạo</button>
+</form>
