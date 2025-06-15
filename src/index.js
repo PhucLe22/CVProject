@@ -35,6 +35,8 @@ app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
 
+
 app.listen(port, () => {
-    console.log(`Test test test`);
+    console.log(`Tieu Tri Bang`);
 });
+
