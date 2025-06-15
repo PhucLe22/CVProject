@@ -37,6 +37,6 @@ app.listen(port, () => {
 
 
 app.listen(port, () => {
-    console.log(`Tieu Tri Bang`);
+    console.log(`Tieu Tri Bang dep trai vcl`);
 });
 
