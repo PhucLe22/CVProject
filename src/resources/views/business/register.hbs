@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng Ký Doanh Nghiệp</title>
+</head>
+
+<body>
+    <h2>Form Đăng Ký Doanh Nghiệp</h2>
+    <form action="/business/check" method="post" enctype="multipart/form-data">
+        <div>
+            <label>Tên doanh nghiệp *</label><br>
+            <input type="text" name="name" required>
+        </div>
+
+        <div>
+            <label>Mã số thuế *</label><br>
+            <input type="text" name="taxId" required>
+        </div>
+
+        <div>
+            <label>Email *</label><br>
+            <input type="email" name="email" required>
+        </div>
+
+        <div>
+            <label>Số điện thoại</label><br>
+            <input type="text" name="phone">
+        </div>
+
+        <div>
+            <label>Địa chỉ</label><br>
+            <textarea name="address" rows="3"></textarea>
+        </div>
+
+        <div>
+            <label>Quy mô</label><br>
+            <select name="scale">
+                <option value="">--Chọn--</option>
+                <option value="1-10">1-10 người</option>
+                <option value="11-50">11-50 người</option>
+                <option value="51-200">51-200 người</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Vốn điều lệ (VND)</label><br>
+            <input type="number" name="capital" min="0">
+        </div>
+
+        <div>
+            <label>Website</label><br>
+            <input type="url" name="website">
+        </div>
+
+        <div>
+            <label>Logo công ty</label><br>
+            <input type="file" name="logo" accept=".jpg,.png,.jpeg">
+        </div>
+
+        <div>
+            <label>Mô tả</label><br>
+            <textarea name="description" rows="3"></textarea>
+        </div>
+
+        <br>
+        <button type="submit">Gửi đăng ký</button>
+    </form>
+</body>
+
+</html>

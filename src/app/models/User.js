@@ -10,6 +10,8 @@ const User = new Schema(
         phonenumber: { type: String },
         major: { type: String },
         brithday: { type: Date },
+        password: { type: String, require: true },
+        role: { type: Number },
         slug: { type: String, unique: true },
     },
     {

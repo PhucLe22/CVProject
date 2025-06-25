@@ -1,0 +1,44 @@
+{
+    "Name": "Emeka Afia",
+    "Contact Information": {
+        "Phone": "(123) 456 7890",
+        "Email Address": "hello@reallygreatsite.com",
+        "Address": "123 Anywhere St., Any City, ST 12345"
+    },
+    "Education": [
+        {
+            "School Name": "West State University",
+            "Degree": "Master of Science",
+            "Dates": "Jan 2030 - Dec 2033",
+            "GPA": ""
+        },
+        {
+            "School Name": "South City College",
+            "Degree": "Bachelor of Science",
+            "Dates": "Jan 2026 - Dec 2030"
+        }
+    ],
+    "Work Experience": [
+        {
+            "Job Title": "Head Robotics Engineer",
+            "Company": "Innovate Engineering",
+            "Dates": "Dec 2035 - present",
+            "Responsibilities": ""
+        },
+        {
+            "Job Title": "Robotics Engineer",
+            "Company": "Practical Systems",
+            "Dates": "Jan 2032 - Nov 2035",
+            "Responsibilities": ""
+        }
+    ],
+    "Skills": [
+        "Installation and Debugging",
+        "Technology Design",
+        "Systems Analysis and Evaluation",
+        "Machine Learning - Artificial Intelligence",
+        "Computer Programming"
+    ],
+    "Projects": [],
+    "Achievements & Hackathons": []
+}

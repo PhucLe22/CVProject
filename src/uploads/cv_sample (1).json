@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Trần Văn B",
+        "email": "tranvanb@example.com",
+        "phone": "0912345678",
+        "address": "Hà Nội, Việt Nam",
+        "position": "Frontend Developer",
+        "summary": "Tôi có 2 năm kinh nghiệm phát triển ReactJS.",
+        "education": [
+            {
+                "school": "Đại học Bách Khoa Hà Nội",
+                "degree": "Cử nhân",
+                "field": "Công nghệ thông tin",
+                "startYear": 2017,
+                "endYear": 2021
+            }
+        ],
+        "experience": [
+            {
+                "company": "Công ty ABC",
+                "position": "Frontend Developer",
+                "startDate": "2022-01-01",
+                "endDate": "2023-12-31",
+                "description": "Xây dựng giao diện web bằng React và Redux"
+            }
+        ],
+        "skills": ["HTML", "CSS", "JavaScript", "React"],
+        "certifications": ["Google UX Design Certificate"],
+        "languages": ["Vietnamese", "English"],
+        "image": "/uploads/tranvanb.jpg",
+        "slug": "tran-van-b",
+        "fileUrl": "/uploads/tranvanb-cv.pdf"
+    },
+    {
+        "name": "Nguyễn Thị C",
+        "email": "nguyenthic@example.com",
+        "phone": "0988123456",
+        "address": "TP.HCM, Việt Nam",
+        "position": "Backend Developer",
+        "summary": "3 năm làm Node.js và MongoDB.",
+        "education": [
+            {
+                "school": "Đại học Khoa học Tự nhiên",
+                "degree": "Cử nhân",
+                "field": "Khoa học máy tính",
+                "startYear": 2015,
+                "endYear": 2019
+            }
+        ],
+        "experience": [
+            {
+                "company": "Công ty XYZ",
+                "position": "Backend Developer",
+                "startDate": "2020-01-01",
+                "endDate": "2024-01-01",
+                "description": "Xây dựng API RESTful với Express và Mongoose"
+            }
+        ],
+        "skills": ["Node.js", "Express", "MongoDB", "Docker"],
+        "certifications": ["AWS Certified Developer"],
+        "languages": ["Vietnamese", "English"],
+        "image": "/uploads/nguyenthic.jpg",
+        "slug": "nguyen-thi-c",
+        "fileUrl": "/uploads/nguyenthic-cv.pdf"
+    }
+]

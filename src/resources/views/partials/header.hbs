@@ -1,18 +1,23 @@
 <nav class="navbar navbar-expand-lg navbar- bg-light">
   <a class="navbar-brand" href="/home">Home</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div style="display: inline-block; position: relative;">
-    <a href="#" onclick="event.preventDefault(); this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'block') ? 'none' : 'block';">
+    <a href="#"
+      onclick="event.preventDefault(); this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'block') ? 'none' : 'block';">
       Menu ▼
     </a>
     <div style="display: none; position: absolute; background: #f0f0f0; border: 1px solid #ccc; padding: 5px;">
       <a href="/courses/create">Add Courses</a><br>
-      <a href="/me/stored/courses">My Courses</a><br>
+      <a href="/courses">All Courses</a><br>
+      <a href="/test/stored/courses">My Courses</a><br>
       <a href="/users/create">Register</a><br>
       <a href="/courses/edit">Edit</a><br>
       <a href="/courses/edit">Log out</a><br>
     </div>
+
+    <a href="/business/register">Business registration</a>
   </div>
 </nav>

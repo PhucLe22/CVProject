@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Upload CV</title>
+</head>
+
+<body>
+    <h1>Upload CV</h1>
+    <form action="/cv/upload" method="POST" enctype="multipart/form-data">
+        <input type="file" name="cvFile" accept=".pdf,.doc,.docx,.json" required>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+[
+    {
+        "name": "Nguyễn Văn A",
+        "description": "Lập trình viên backend với 5 năm kinh nghiệm trong Node.js, MongoDB và Express.",
+        "image": "https://example.com/images/nguyenvana.jpg",
+        "slug": "nguyen-van-a"
+    },
+    {
+        "name": "Trần Thị B",
+        "description": "Chuyên gia phân tích dữ liệu, từng làm việc tại các công ty lớn như FPT, Viettel.",
+        "image": "https://example.com/images/tranthib.jpg",
+        "slug": "tran-thi-b"
+    },
+    {
+        "name": "Lê Văn C",
+        "description": "Sinh viên năm cuối ngành Khoa học Máy tính, có kinh nghiệm thực tập ở công ty startup AI.",
+        "image": "https://example.com/images/levanc.jpg",
+        "slug": "le-van-c"
+    }
+]

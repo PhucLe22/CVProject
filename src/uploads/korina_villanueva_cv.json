@@ -1,0 +1,83 @@
+{
+    "Name": "KORINA VILLANUEVA",
+    "Contact Information": {
+        "Phone": "+123-456-7890",
+        "Email Address": "hello@reallygreatsite.com",
+        "Address": "123 Anywhere St., Any City",
+        "Website": "www.reallygreatsite.com"
+    },
+    "Education": [
+        {
+            "School Name": "Wardiere University",
+            "Degree": "Bachelor of Computer Science",
+            "Dates": "2029 - 2032",
+            "GPA": "3.8/4.0"
+        },
+        {
+            "School Name": "Borcelle High School",
+            "Degree": "High School Diploma",
+            "Dates": "2026 - 2029",
+            "GPA": "3.8/4.0"
+        }
+    ],
+    "Work Experience": [],
+    "Skills": [
+        {
+            "Skill Type": "Soft Skills",
+            "Skills": [
+                "Teamwork",
+                "Time Management",
+                "Leadership",
+                "Effective Communication",
+                "Critical Thinking"
+            ]
+        },
+        {
+            "Skill Type": "Tech Skills",
+            "Skills": [
+                "Python (Expert)",
+                "Java (Expert)",
+                "C++ (Intermediate)",
+                "Data Structures",
+                "Algorithms",
+                "SQL, MySQL",
+                "Machine Learning",
+                "Web Development"
+            ]
+        }
+    ],
+    "Projects": [
+        {
+            "Project Name": "E-commerce Platform Development",
+            "Description": "Led the development of a comprehensive e-commerce platform for a retail company, including features such as product listings, shopping cart, payment gateway integration, and order management.",
+            "Technologies Used": [
+                "React",
+                "Node.js",
+                "MongoDB",
+                "Express",
+                "Stripe API"
+            ],
+            "Dates": "JUNE 2029 - JAN 2030"
+        },
+        {
+            "Project Name": "Real-time Chat Application",
+            "Description": "Developed a real-time chat application enabling users to send instant messages, create group chats, and share multimedia content.",
+            "Technologies Used": ["Socket.io", "Node.js", "Express", "MongoDB"],
+            "Dates": "JUNE 2028 - JAN 2029"
+        }
+    ],
+    "Achievements & Hackathons": [
+        {
+            "Details": "Recognized for academic excellence and maintaining a GPA of 3.8/4.0 in college.",
+            "Type": "Recognition"
+        },
+        {
+            "Details": "Ranked in the top 5% out of 500 participants in a machine learning hackathon for my Real-time Chat Application project.",
+            "Type": "Hackathon Achievement"
+        },
+        {
+            "Details": "Won first prize for the best project in a renowned tech hackathon for my Sustainable Shopping Assistant project.",
+            "Type": "Hackathon Achievement"
+        }
+    ]
+}

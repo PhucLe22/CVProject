@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Frontend Developer",
+        "company": "InnovateX",
+        "location": "Hồ Chí Minh",
+        "description": "Phát triển giao diện người dùng sử dụng ReactJS, đảm bảo UI thân thiện và responsive."
+    },
+    {
+        "title": "Backend Developer",
+        "company": "TechFlow",
+        "location": "Đà Nẵng",
+        "description": "Xây dựng API RESTful với Node.js và MongoDB, đảm bảo bảo mật và hiệu suất cao."
+    },
+    {
+        "title": "Data Analyst",
+        "company": "Insight Ltd.",
+        "location": "Hà Nội",
+        "description": "Phân tích dữ liệu và tạo báo cáo hỗ trợ quyết định kinh doanh. Sử dụng SQL và Python."
+    }
+]

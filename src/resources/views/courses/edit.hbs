@@ -253,7 +253,7 @@
             <p class="form-subtitle">Chia sẻ kiến thức của bạn với thế giới</p>
         </div>
 
-        <form action="/courses/edit" method="POST">
+        <form action="/courses/{{course._id}}?_method=PUT" method="POST">
             <div class="form-group">
                 <label for="name" class="form-label">📖 Tên khóa học</label>
                 <input type="text" id="name" name="name" class="form-input" required 
@@ -263,7 +263,7 @@
             <div class="form-group">
                 <label for="description" class="form-label">📝 Mô tả</label>
                 <textarea id="description" name="description" class="form-textarea" required 
-                          placeholder="Mô tả chi tiết về khóa học, nội dung và lợi ích...">value = "{{course.description}}</textarea>
+                          placeholder="Mô tả chi tiết về khóa học, nội dung và lợi ích...">{{course.description}}</textarea>
             </div>
 
             <div class="form-group">

@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Nguyễn Văn A",
+        "email": "nguyenvana@example.com",
+        "phone": "0901234567",
+        "address": "123 Đường ABC, Quận 1, TP.HCM",
+        "position": "Frontend Developer",
+        "summary": "Lập trình viên giao diện với 3 năm kinh nghiệm React.",
+        "education": [
+            {
+                "school": "Đại học Bách Khoa TP.HCM",
+                "degree": "Cử nhân",
+                "field": "Công nghệ thông tin",
+                "startYear": 2016,
+                "endYear": 2020
+            }
+        ],
+        "experience": [
+            {
+                "company": "ABC Corp",
+                "position": "Frontend Developer",
+                "startDate": "2021-01-01",
+                "endDate": "2023-01-01",
+                "description": "Phát triển giao diện người dùng bằng ReactJS và Tailwind."
+            }
+        ],
+        "skills": ["JavaScript", "React", "HTML", "CSS"],
+        "certifications": ["Google UX Certificate", "React Nanodegree"],
+        "languages": ["Tiếng Việt", "Tiếng Anh"],
+        "image": "/uploads/avatar1.jpg",
+        "slug": "nguyen-van-a",
+        "fileUrl": "/uploads/nguyenvana_cv.pdf"
+    },
+    {
+        "name": "Trần Thị B",
+        "email": "tranthib@example.com",
+        "phone": "0987654321",
+        "address": "456 Đường XYZ, Quận 3, TP.HCM",
+        "position": "Backend Developer",
+        "summary": "Chuyên về Node.js và MongoDB với hơn 2 năm kinh nghiệm.",
+        "education": [
+            {
+                "school": "Đại học Khoa học Tự nhiên",
+                "degree": "Kỹ sư",
+                "field": "Khoa học máy tính",
+                "startYear": 2015,
+                "endYear": 2019
+            }
+        ],
+        "experience": [
+            {
+                "company": "XYZ Solutions",
+                "position": "Backend Developer",
+                "startDate": "2020-05-01",
+                "endDate": "2023-06-01",
+                "description": "Thiết kế và phát triển RESTful API sử dụng ExpressJS."
+            }
+        ],
+        "skills": ["Node.js", "MongoDB", "Express", "REST API"],
+        "certifications": ["MongoDB Developer Associate"],
+        "languages": ["Tiếng Việt", "Tiếng Anh", "Tiếng Nhật"],
+        "image": "/uploads/avatar2.jpg",
+        "slug": "tran-thi-b",
+        "fileUrl": "/uploads/tranthib_cv.docx"
+    }
+]

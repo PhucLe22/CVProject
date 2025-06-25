@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,8 +47,15 @@
         }
 
         @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .form-header {
@@ -103,7 +111,7 @@
             transform: translateY(-2px);
         }
 
-        .form-input:focus + .form-label {
+        .form-input:focus+.form-label {
             color: #667eea;
         }
 
@@ -220,8 +228,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
         }
 
         @media (max-width: 640px) {
@@ -240,6 +255,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="form-container">
         <div class="floating-shapes">
@@ -256,32 +272,25 @@
         <form action="/courses/store" method="POST">
             <div class="form-group">
                 <label for="name" class="form-label">📖 Tên khóa học</label>
-                <input type="text" id="name" name="name" class="form-input" required 
-                       placeholder="Nhập tên khóa học của bạn...">
+                <input type="text" id="name" name="name" class="form-input" required
+                    placeholder="Nhập tên khóa học của bạn...">
             </div>
 
             <div class="form-group">
                 <label for="description" class="form-label">📝 Mô tả</label>
-                <textarea id="description" name="description" class="form-textarea" required 
-                          placeholder="Mô tả chi tiết về khóa học, nội dung và lợi ích..."></textarea>
+                <textarea id="description" name="description" class="form-textarea" required
+                    placeholder="Mô tả chi tiết về khóa học, nội dung và lợi ích..."></textarea>
             </div>
 
             <div class="form-group">
                 <label for="image" class="form-label">🖼️ URL ảnh đại diện</label>
-                <input type="text" id="image" name="image" class="form-input" required 
-                       placeholder="https://example.com/image.jpg">
+                <input type="text" id="image" name="image" class="form-input" required
+                    placeholder="https://example.com/image.jpg">
             </div>
-
-            {{!-- <div class="form-group">
-                <label for="slug" class="form-label">🔗 Slug (đường dẫn)</label>
-                <input type="text" id="slug" name="slug" class="form-input" required 
-                       placeholder="khoa-hoc-lap-trinh">
-            </div> --}}
 
             <div class="form-group">
                 <label for="videoId" class="form-label">🎥 YouTube Video ID</label>
-                <input type="text" id="videoId" name="videoId" class="form-input" 
-                       placeholder="dQw4w9WgXcQ">
+                <input type="text" id="videoId" name="videoId" class="form-input" placeholder="dQw4w9WgXcQ">
             </div>
 
             <button type="submit" class="submit-btn">
@@ -293,13 +302,13 @@
     <script>
         // Add smooth focus transitions
         const inputs = document.querySelectorAll('.form-input, .form-textarea');
-        
+
         inputs.forEach(input => {
-            input.addEventListener('focus', function() {
+            input.addEventListener('focus', function () {
                 this.parentElement.style.transform = 'scale(1.02)';
             });
-            
-            input.addEventListener('blur', function() {
+
+            input.addEventListener('blur', function () {
                 this.parentElement.style.transform = 'scale(1)';
             });
         });
@@ -307,8 +316,8 @@
         // Auto-generate slug from course name
         const nameInput = document.getElementById('name');
         const slugInput = document.getElementById('slug');
-        
-        nameInput.addEventListener('input', function() {
+
+        nameInput.addEventListener('input', function () {
             const slug = this.value
                 .toLowerCase()
                 .normalize('NFD')
@@ -318,24 +327,24 @@
                 .replace(/\s+/g, '-')
                 .replace(/-+/g, '-')
                 .trim('-');
-            
+
             if (slug && !slugInput.dataset.userModified) {
                 slugInput.value = slug;
             }
         });
 
-        slugInput.addEventListener('input', function() {
+        slugInput.addEventListener('input', function () {
             this.dataset.userModified = 'true';
         });
 
         // Form validation with visual feedback
         const form = document.querySelector('form');
         const submitBtn = document.querySelector('.submit-btn');
-        
-        form.addEventListener('submit', function(e) {
+
+        form.addEventListener('submit', function (e) {
             submitBtn.innerHTML = '⏳ Đang tạo khóa học...';
             submitBtn.disabled = true;
-            
+
             // Simulate processing time
             setTimeout(() => {
                 submitBtn.innerHTML = '✅ Hoàn thành!';
@@ -353,16 +362,17 @@
             'Khóa học Thiết kế UI/UX',
             'Khóa học Photoshop cơ bản'
         ];
-        
+
         let currentPlaceholder = 0;
         const nameInputElement = document.getElementById('name');
-        
+
         function cyclePlaceholders() {
             nameInputElement.placeholder = placeholders[currentPlaceholder];
             currentPlaceholder = (currentPlaceholder + 1) % placeholders.length;
         }
-        
+
         setInterval(cyclePlaceholders, 3000);
     </script>
 </body>
+
 </html>
