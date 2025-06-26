@@ -1,0 +1,82 @@
+<div class="mt-4">
+    <h3>Quản lý doanh nghiệp</h3>
+
+    <table class="table mt-4">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tên doanh nghiệp</th>
+                <th scope="col">Trạng thái</th>
+                <th scope="col">Email</th>
+                <th scope="col" colspan="3">Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each business}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.name}}</td>
+                <td>
+                    <select class="form-control form-control-sm" disabled>
+                        <option value="pending" {{#if (eq this.status "pending" )}}selected{{/if}}>Pending</option>
+                        <option value="approved" {{#if (eq this.status "approved" )}}selected{{/if}}>Approved</option>
+                        <option value="rejected" {{#if (eq this.status "rejected" )}}selected{{/if}}>Rejected</option>
+                        <option value="suspended" {{#if (eq this.status "suspended" )}}selected{{/if}}>Suspended
+                        </option>
+                    </select>
+                </td>
+                <td>{{this.email}}</td>
+                <td>{{this.createdAt}}</td>
+                <td>
+                    <a href="/admin/business/{{this._id}}/edit" class="btn btn-link">Edit</a>
+                </td>
+                <td>
+                    <a href="#" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-business-modal"
+                        class="btn btn-link text-danger">Delete</a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Confirm delete modal --}}
+<div id="delete-business-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Xoá doanh nghiệp</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xoá doanh nghiệp này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btn-delete-business">Xoá</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form name="delete-business-form" method="POST"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let businessId;
+        const deleteForm = document.forms['delete-business-form'];
+        const btnDelete = document.getElementById('btn-delete-business');
+
+        $('#delete-business-modal').on('show.bs.modal', function (event) {
+            const button = $(event.relatedTarget);
+            businessId = button.data('id');
+        });
+
+        btnDelete.onclick = function () {
+            deleteForm.action = '/admin/business/' + businessId + '?_method=DELETE';
+            deleteForm.submit();
+        };
+    });
+</script>

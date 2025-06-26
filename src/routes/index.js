@@ -7,7 +7,9 @@ const meRouter = require('./me');
 const jobRouter = require('./job');
 const cvRouter = require('./cv');
 const businessRouter = require('./business');
+const adminRouter = require('./admin');
 function route(app) {
+    app.use('/admin', adminRouter);
     app.use('/business', businessRouter);
     app.use('/cv', cvRouter);
     app.use('/jobs', jobRouter);

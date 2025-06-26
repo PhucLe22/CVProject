@@ -1,0 +1,9 @@
+<h2>Nhập mã OTP được gửi đến email</h2>
+<form action="/business/verify-otp" method="POST">
+    <input type="hidden" name="email" value="<%= email %>" />
+
+    <label>Mã OTP:</label>
+    <input type="text" name="otp" maxlength="6" required />
+
+    <button type="submit">Xác nhận</button>
+</form>

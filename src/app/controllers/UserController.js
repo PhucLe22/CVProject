@@ -69,9 +69,7 @@ class UserController {
                         console.log(user.role);
                         if (user.role === 1) {
                             res.render('site');
-                        } else if (user.role === 2) {
-                            res.render('companies/home');
-                        } else if (user.role === 3) {
+                        } else if (user.role === 0) {
                             res.render('admin/home');
                         } else {
                             return res

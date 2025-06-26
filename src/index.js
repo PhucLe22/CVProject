@@ -9,26 +9,37 @@ const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
 const session = require('express-session');
+const hbs = require('express-handlebars');
+const exphbs = require('express-handlebars');
+const handlebarsHelpers = require('../src/helpers/handlebars');
 
 // Connect to DB
 db.connect();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.engine(
+    'hbs',
+    exphbs.engine({
+        extname: '.hbs',
+        helpers: handlebarsHelpers,
+    }),
+);
 
 app.use(express.urlencoded({ extended: true })); // cho form HTML
 app.use(express.json()); // cho fetch/ajax hoặc postman
 
-app.use(methodOverride('_method'));
-
 // Middleware session
 app.use(
     session({
-        secret: 'secret-key-abc123', // Bạn nên dùng 1 chuỗi random dài
+        secret: 'secret-key-abc123',
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false }, // false nếu chạy localhost HTTP
+        cookie: { secure: false }, // false khi dùng localhost (không có HTTPS)
     }),
 );
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(methodOverride('_method'));
 
 // Template engine
 app.engine(
