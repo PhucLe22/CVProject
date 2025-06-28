@@ -32,7 +32,7 @@ class UserController {
     }
 
     login(req, res, next) {
-        res.render('users/loginPage');
+        res.render('users/login');
     }
 
     check(req, res, next) {
@@ -54,6 +54,7 @@ class UserController {
                         console.error('Lỗi khi so sánh bcrypt:', err);
                     });
 
+                // test
                 bcrypt.hash('admin123', 10).then((hashed) => {
                     console.log('Hash của admin123:', hashed);
                 });
@@ -70,7 +71,7 @@ class UserController {
                         if (user.role === 1) {
                             res.render('site');
                         } else if (user.role === 0) {
-                            res.render('admin/home');
+                            res.redirect('/admin');
                         } else {
                             return res
                                 .status(403)

@@ -15,7 +15,7 @@ const Business = new Schema(
         email: {
             type: String,
             required: true,
-            unique: true,
+            // unique: true,
             match: [/.+@.+\..+/, 'Email không hợp lệ'],
         },
         phone: { type: String },

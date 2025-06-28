@@ -15,16 +15,8 @@
             {{#each business}}
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
-                <td>{{this.name}}</td>
-                <td>
-                    <select class="form-control form-control-sm" disabled>
-                        <option value="pending" {{#if (eq this.status "pending" )}}selected{{/if}}>Pending</option>
-                        <option value="approved" {{#if (eq this.status "approved" )}}selected{{/if}}>Approved</option>
-                        <option value="rejected" {{#if (eq this.status "rejected" )}}selected{{/if}}>Rejected</option>
-                        <option value="suspended" {{#if (eq this.status "suspended" )}}selected{{/if}}>Suspended
-                        </option>
-                    </select>
-                </td>
+                <td><a href="/business/detail">{{this.name}}</a></td>
+                <td>{{this.status}}</td>
                 <td>{{this.email}}</td>
                 <td>{{this.createdAt}}</td>
                 <td>

@@ -46,7 +46,7 @@ class CompanyController {
             res.clearCookie('connect.sid');
 
             // Chuyển hướng sau khi logout
-            res.redirect('/business/login');
+            res.redirect('/home');
         });
     }
 
@@ -107,6 +107,9 @@ class CompanyController {
                     // Lưu OTP tạm
                     req.session.otp = otp;
                     req.session.email = email; // cần thiết để lấy lại sau
+                    req.session.businessID = business._id;
+
+                    console.log(req.session.businessID);
 
                     // Gửi form nhập OTP
                     res.render('business/verify-otp', { email });
