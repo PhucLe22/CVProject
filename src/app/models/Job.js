@@ -4,14 +4,12 @@ const Schema = mongoose.Schema;
 
 const JobSchema = new Schema(
     {
-        title: { type: String, required: true }, // tên công việc
-        description: { type: String, required: true }, // mô tả công việc
-        location: { type: String, required: true }, // địa điểm làm việc
-        salary: { type: String, required: true }, // mức lương
-        company: { type: String, required: true }, // tên công ty
-        logo: { type: String }, // link logo công ty
-        contact: { type: String, required: true }, // thông tin liên hệ
-        slug: { type: String, unique: true }, // slug để SEO URL
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        location: { type: String, required: true },
+        salary: { type: String, required: true },
+        contact: { type: String, required: true },
+        slug: { type: String, unique: true },
         businessID: {
             type: Schema.Types.ObjectId,
             ref: 'Business',

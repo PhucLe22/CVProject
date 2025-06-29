@@ -12,7 +12,7 @@ class CompanyController {
             return res.redirect('/business/login'); // Chưa đăng nhập, chuyển về trang login
         }
 
-        res.render('business/home'); // Đã đăng nhập, hiển thị trang home
+        res.render('business/home', { layout: 'main-business' }); // Đã đăng nhập, hiển thị trang home
     }
 
     business(req, res, next) {
@@ -44,7 +44,7 @@ class CompanyController {
 
             // Xoá cookie (nếu muốn)
             res.clearCookie('connect.sid');
-
+            console.log('Session sau khi dang xuat: ', req.session);
             // Chuyển hướng sau khi logout
             res.redirect('/home');
         });
@@ -95,11 +95,10 @@ class CompanyController {
 
                 const mailOptions = {
                     from: '"Xác thực OTP" <your.email@gmail.com>',
-                    to: 'lenguyenthienphuc2004@gmail.com',
+                    to: req.body.email,
                     subject: 'Mã OTP đăng nhập doanh nghiệp',
                     text: `Mã xác nhận của bạn là: ${otp}`,
                 };
-
                 try {
                     await transporter.sendMail(mailOptions);
                     console.log(`📧 Gửi OTP thành công: ${otp}`);
@@ -108,6 +107,7 @@ class CompanyController {
                     req.session.otp = otp;
                     req.session.email = email; // cần thiết để lấy lại sau
                     req.session.businessID = business._id;
+                    req.session.businessAva = business.logo;
 
                     console.log(req.session.businessID);
 

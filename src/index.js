@@ -37,6 +37,13 @@ app.use(
     }),
 );
 
+// Middleware setLocals (sau khi có session)
+app.use((req, res, next) => {
+    res.locals.currentUser = req.session.users || null;
+    res.locals.currentBusiness = req.session.business || null;
+    next();
+});
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(methodOverride('_method'));

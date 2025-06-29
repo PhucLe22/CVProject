@@ -1,25 +1,59 @@
-<form action="/users/store" method="POST">
-  <h2>Thêm người dùng mới</h2>
+<!DOCTYPE html>
+<html lang="vi">
 
-  <label for="username">Tên người dùng:</label><br>
-  <input type="text" id="username" name="username" required minlength="1" maxlength="255"><br><br>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thêm Người Dùng</title>
+</head>
 
-  <label for="ava">Link ảnh đại diện (ava):</label><br>
-  <input type="text" id="ava" name="ava"><br><br>
+<body>
+  <center>
+    <h2>Thêm người dùng mới</h2>
 
-  <label for="email">Email:</label><br>
-  <input type="email" id="email" a name="email" required><br><br>
+    <form action="/users/store" method="POST">
+      <table>
+        <tr>
+          <td><label for="username">Tên người dùng:</label></td>
+          <td><input type="text" id="username" name="username" required minlength="1" maxlength="255"></td>
+        </tr>
 
-  <label for="phonenumber">Số điện thoại:</label><br>
-  <input type="text" id="phonenumber" name="phonenumber"><br><br>
+        <tr>
+          <td><label for="ava">Link ảnh đại diện (ava):</label></td>
+          <td><input type="text" id="ava" name="ava"></td>
+        </tr>
 
-  <label for="major">Chuyên ngành:</label><br>
-  <input type="text" id="major" name="major"><br><br>
+        <tr>
+          <td><label for="email">Email:</label></td>
+          <td><input type="email" id="email" name="email" required></td>
+        </tr>
 
-  <label for="birthday">Ngày sinh:</label><br>
-  <input type="date" id="birthday" name="birthday"><br><br>
+        <tr>
+          <td><label for="phonenumber">Số điện thoại:</label></td>
+          <td><input type="text" id="phonenumber" name="phonenumber"></td>
+        </tr>
 
-  <button type="submit">Tạo</button>
+        <tr>
+          <td><label for="major">Chuyên ngành:</label></td>
+          <td><input type="text" id="major" name="major"></td>
+        </tr>
 
-  <a href="/business/register">Are you hiring?</a>
-</form>
+        <tr>
+          <td><label for="birthday">Ngày sinh:</label></td>
+          <td><input type="date" id="birthday" name="birthday"></td>
+        </tr>
+
+        <tr>
+          <td colspan="2">
+            <button type="submit">Tạo</button>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+    <br>
+    <a href="/business/register">Are you hiring?</a>
+  </center>
+</body>
+
+</html>

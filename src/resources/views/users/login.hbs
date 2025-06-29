@@ -5,313 +5,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Nhập</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .login-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-
-        .login-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin-bottom: 8px;
-        }
-
-        .login-subtitle {
-            color: #666;
-            font-size: 15px;
-        }
-
-        .form-group {
-            margin-bottom: 24px;
-            position: relative;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 500;
-            color: #374151;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 16px 20px;
-            border: 2px solid #e5e7eb;
-            border-radius: 12px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: #fafafa;
-            color: #1a1a1a;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            background: #fff;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-            transform: translateY(-1px);
-        }
-
-        .form-input:hover {
-            border-color: #d1d5db;
-        }
-
-        .login-button {
-            width: 100%;
-            padding: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .login-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .login-button:hover::before {
-            left: 100%;
-        }
-
-        .login-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-        }
-
-        .login-button:active {
-            transform: translateY(-1px);
-        }
-
-        .forgot-password {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .forgot-password a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .forgot-password a:hover {
-            color: #764ba2;
-        }
-
-        .divider {
-            margin: 24px 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #e5e7eb;
-        }
-
-        .divider span {
-            background: rgba(255, 255, 255, 0.95);
-            color: #666;
-            padding: 0 16px;
-            font-size: 14px;
-        }
-
-        @media (max-width: 480px) {
-            .login-container {
-                padding: 30px 24px;
-                margin: 20px;
-            }
-
-            .login-title {
-                font-size: 24px;
-            }
-        }
-
-        /* Animation cho inputs */
-        .form-input:not(:placeholder-shown)+.floating-label,
-        .form-input:focus+.floating-label {
-            transform: translateY(-24px) scale(0.85);
-            color: #667eea;
-        }
-
-        .floating-label {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: transparent;
-            color: #666;
-            pointer-events: none;
-            transition: all 0.3s ease;
-            font-size: 16px;
-        }
-
-        .form-group.floating {
-            margin-bottom: 32px;
-        }
-
-        .form-group.floating .form-input {
-            background: transparent;
-            border: 2px solid #e5e7eb;
-        }
-
-        .form-group.floating .form-input:focus {
-            background: rgba(102, 126, 234, 0.02);
-        }
-    </style>
 </head>
 
-<body>
-    <div class="login-container">
-        <div class="login-header">
-            <h1 class="login-title">Chào mừng trở lại!</h1>
-            <p class="login-subtitle">Đăng nhập vào tài khoản của bạn</p>
-        </div>
+<center>
+
+    <body>
+        <h1>Đăng Nhập</h1>
 
         <form action="/users/home" method="post">
-            <div class="form-group floating">
-                <input type="email" name="email" class="form-input" required placeholder=" ">
-                <label class="floating-label">Email</label>
-            </div>
-
-            <div class="form-group floating">
-                <input type="password" name="password" class="form-input" required placeholder=" ">
-                <label class="floating-label">Mật khẩu</label>
-            </div>
-
-            <button type="submit" class="login-button">
-                Đăng nhập
-            </button>
+            <table>
+                <tr>
+                    <td><label for="email">Email:</label></td>
+                    <td><input type="email" name="email" id="email" required></td>
+                </tr>
+                <tr>
+                    <td><label for="password">Mật khẩu:</label></td>
+                    <td><input type="password" name="password" id="password" required></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Đăng nhập</button>
+                    </td>
+                </tr>
+            </table>
         </form>
 
-        <div class="forgot-password">
-            <a href="#forgot">Quên mật khẩu?</a>
-        </div>
-
-        <div class="divider">
-            <span>hoặc</span>
-        </div>
-
-        <p style="text-align: center; color: #666; font-size: 14px;">
-            Chưa có tài khoản? <a href="#register" style="color: #667eea; text-decoration: none; font-weight: 500;">Đăng
-                ký ngay</a>
-        </p>
-    </div>
-
-    <script>
-        // Thêm hiệu ứng khi focus vào input
-        document.querySelectorAll('.form-input').forEach(input => {
-            input.addEventListener('focus', function () {
-                this.parentElement.classList.add('focused');
-            });
-
-            input.addEventListener('blur', function () {
-                this.parentElement.classList.remove('focused');
-            });
-        });
-
-        // Thêm hiệu ứng ripple cho button
-        document.querySelector('.login-button').addEventListener('click', function (e) {
-            const ripple = document.createElement('div');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255,255,255,0.3);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.6s ease-out;
-                pointer-events: none;
-            `;
-
-            this.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-
-        // CSS cho ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(2);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-</body>
+        <br>
+        <a href="users/forgotPassword">Quên mật khẩu?</a>
+        <br><br>
+        <p>Chưa có tài khoản? <a href="/users/create">Đăng ký ngay</a></p>
+    </body>
+</center>
 
 </html>

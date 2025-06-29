@@ -1,13 +1,37 @@
-<h2>Đăng nhập doanh nghiệp</h2>
-<form action="/business/inspect" method="POST">
-    <label>Email:</label>
-    <input type="email" name="email" required />
+<!DOCTYPE html>
+<html lang="vi">
 
-    <label>Mã số thuế:</label>
-    <input type="text" name="taxId" required />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập Doanh Nghiệp</title>
+</head>
 
-    <label>Mật khẩu:</label>
-    <input type="password" name="password" required />
+<body>
+    <center>
+        <h2>Đăng nhập doanh nghiệp</h2>
+        <form action="/business/inspect" method="POST">
+            <table>
+                <tr>
+                    <td><label>Email:</label></td>
+                    <td><input type="email" name="email" required /></td>
+                </tr>
+                <tr>
+                    <td><label>Mã số thuế:</label></td>
+                    <td><input type="text" name="taxId" required /></td>
+                </tr>
+                <tr>
+                    <td><label>Mật khẩu:</label></td>
+                    <td><input type="password" name="password" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Đăng nhập</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
 
-    <button type="submit">Đăng nhập</button>
-</form>
+</html>

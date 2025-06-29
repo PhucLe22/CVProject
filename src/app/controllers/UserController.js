@@ -66,6 +66,7 @@ class UserController {
                     } else {
                         console.log(user._id);
                         req.session.userId = user._id;
+                        req.session.ava = user.ava;
                         console.log('session:', req.session.userId);
                         console.log(user.role);
                         if (user.role === 1) {

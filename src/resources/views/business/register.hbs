@@ -1,66 +1,92 @@
-<form action="/business/check" method="POST">
-    <div>
-        <label>Tên doanh nghiệp:</label>
-        <input type="text" name="name" required />
-    </div>
+<!DOCTYPE html>
+<html lang="vi">
 
-    <div>
-        <label>Mã số thuế (taxId):</label>
-        <input type="text" name="taxId" required />
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Doanh Nghiệp</title>
+</head>
 
-    <div>
-        <label>Email:</label>
-        <input type="email" name="email" required />
-    </div>
+<body>
+    <center>
+        <h1>Đăng Ký Doanh Nghiệp</h1>
 
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password" required />
-    </div>
+        <form action="/business/check" method="POST">
+            <table>
+                <tr>
+                    <td><label>Tên doanh nghiệp:</label></td>
+                    <td><input type="text" name="name" required /></td>
+                </tr>
 
-    <div>
-        <label>Số điện thoại:</label>
-        <input type="text" name="phone" />
-    </div>
+                <tr>
+                    <td><label>Mã số thuế (taxId):</label></td>
+                    <td><input type="text" name="taxId" required /></td>
+                </tr>
 
-    <div>
-        <label>Địa chỉ:</label>
-        <input type="text" name="address" />
-    </div>
+                <tr>
+                    <td><label>Email:</label></td>
+                    <td><input type="email" name="email" required /></td>
+                </tr>
 
-    <div>
-        <label>Quy mô:</label>
-        <select name="scale">
-            <option value="1-10">1-10</option>
-            <option value="11-50">11-50</option>
-            <option value="51-200">51-200</option>
-            <option value="201-500">201-500</option>
-            <option value="500+">500+</option>
-        </select>
-    </div>
+                <tr>
+                    <td><label>Password:</label></td>
+                    <td><input type="password" name="password" required /></td>
+                </tr>
 
-    <div>
-        <label>Vốn điều lệ:</label>
-        <input type="text" name="capital" />
-    </div>
+                <tr>
+                    <td><label>Số điện thoại:</label></td>
+                    <td><input type="text" name="phone" /></td>
+                </tr>
 
-    <div>
-        <label>Website:</label>
-        <input type="text" name="website" />
-    </div>
+                <tr>
+                    <td><label>Địa chỉ:</label></td>
+                    <td><input type="text" name="address" /></td>
+                </tr>
 
-    <div>
-        <label>Logo (URL):</label>
-        <input type="text" name="logo" />
-    </div>
+                <tr>
+                    <td><label>Quy mô:</label></td>
+                    <td>
+                        <select name="scale">
+                            <option value="1-10">1-10</option>
+                            <option value="11-50">11-50</option>
+                            <option value="51-200">51-200</option>
+                            <option value="201-500">201-500</option>
+                            <option value="500+">500+</option>
+                        </select>
+                    </td>
+                </tr>
 
-    <div>
-        <label>Mô tả:</label>
-        <textarea name="description"></textarea>
-    </div>
+                <tr>
+                    <td><label>Vốn điều lệ:</label></td>
+                    <td><input type="text" name="capital" /></td>
+                </tr>
 
-    <button type="submit">Gửi đăng ký</button>
+                <tr>
+                    <td><label>Website:</label></td>
+                    <td><input type="text" name="website" /></td>
+                </tr>
 
-    <a href="/business/login">Did you have your own account?</a>
-</form>
+                <tr>
+                    <td><label>Logo (URL):</label></td>
+                    <td><input type="text" name="logo" /></td>
+                </tr>
+
+                <tr>
+                    <td><label>Mô tả:</label></td>
+                    <td><textarea name="description" rows="4" cols="30"></textarea></td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Gửi đăng ký</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <br>
+        <a href="/business/login">Did you have your own account?</a>
+    </center>
+</body>
+
+</html>

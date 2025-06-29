@@ -1,26 +1,51 @@
-<form action="/jobs/store" method="POST">
-    <h2>Đăng tin tuyển dụng</h2>
+<!DOCTYPE html>
+<html lang="vi">
 
-    <label for="title">Tên công việc:</label><br>
-    <input type="text" id="title" name="title" required><br><br>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Tin Tuyển Dụng</title>
+</head>
 
-    <label for="description">Mô tả công việc:</label><br>
-    <textarea id="description" name="description" rows="4" required></textarea><br><br>
+<body>
+    <center>
+        <h2>Đăng tin tuyển dụng</h2>
 
-    <label for="location">Địa điểm làm việc:</label><br>
-    <input type="text" id="location" name="location" required><br><br>
+        <form action="/jobs/store" method="POST">
+            <table>
+                <tr>
+                    <td><label for="title">Tên công việc:</label></td>
+                    <td><input type="text" id="title" name="title" required></td>
+                </tr>
 
-    <label for="salary">Mức lương:</label><br>
-    <input type="text" id="salary" name="salary" required><br><br>
+                <tr>
+                    <td><label for="description">Mô tả công việc:</label></td>
+                    <td><textarea id="description" name="description" rows="4" cols="30" required></textarea></td>
+                </tr>
 
-    <label for="company">Tên công ty:</label><br>
-    <input type="text" id="company" name="company" required><br><br>
+                <tr>
+                    <td><label for="location">Địa điểm làm việc:</label></td>
+                    <td><input type="text" id="location" name="location" required></td>
+                </tr>
 
-    <label for="logo">Link logo công ty:</label><br>
-    <input type="text" id="logo" name="logo"><br><br>
+                <tr>
+                    <td><label for="salary">Mức lương:</label></td>
+                    <td><input type="text" id="salary" name="salary" required></td>
+                </tr>
 
-    <label for="contact">Thông tin liên hệ:</label><br>
-    <input type="text" id="contact" name="contact" required><br><br>
+                <tr>
+                    <td><label for="contact">Thông tin liên hệ:</label></td>
+                    <td><input type="text" id="contact" name="contact" required></td>
+                </tr>
 
-    <button type="submit">Đăng tuyển</button>
-</form>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit">Đăng tuyển</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </center>
+</body>
+
+</html>

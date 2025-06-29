@@ -20,12 +20,20 @@ class JobController {
     }
 
     create(req, res, next) {
-        res.render('jobs/create');
+        console.log('Session: ', req.session.business);
+        if (!req.session.businessID) {
+            return res.redirect('/business/login'); // hoặc trả về 401
+        }
+        res.render('jobs/create', {
+            layout: 'main-business',
+            isBusiness: true,
+            business: req.session.business,
+        });
     }
+
     store(req, res, next) {
         const formData = req.body;
 
-        // ⚠️ Gán businessID từ session
         if (!req.session.businessID) {
             return res
                 .status(401)
