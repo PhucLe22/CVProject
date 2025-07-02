@@ -7,7 +7,7 @@ class AdminController {
     index(req, res, next) {
         if (req.session.businessEmail || req.session.userId) {
             // Nếu đã đăng nhập thì render trang admin
-            res.render('admin/home');
+            res.render('admin/home', { layout: 'main-admin' });
         } else {
             // Nếu chưa đăng nhập thì chuyển về trang login
             res.redirect('/login');

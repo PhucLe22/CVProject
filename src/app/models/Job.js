@@ -6,6 +6,11 @@ const JobSchema = new Schema(
     {
         title: { type: String, required: true },
         description: { type: String, required: true },
+        status: {
+            type: String,
+            enum: ['active', 'closed'], // trạng thái hợp lệ
+            default: 'active',
+        },
         location: { type: String, required: true },
         salary: { type: String, required: true },
         contact: { type: String, required: true },
@@ -15,6 +20,7 @@ const JobSchema = new Schema(
             ref: 'Business',
             required: true,
         }, // id của business lấy từ session
+        applicants: [{ type: Schema.Types.ObjectId, ref: 'User' }], // danh sách user đã ứng tuyển
     },
     {
         timestamps: true,

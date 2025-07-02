@@ -1,22 +1,18 @@
 const Job = require('../models/Job');
 const { mongooseToObject } = require('../../util/mongoose');
 const { multipleMongooseToObject } = require('../../util/mongoose');
+const session = require('express-session');
 
 class JobController {
-    index(req, res, next) {
-        if (!req.session.businessID) {
-            return res
-                .status(401)
-                .send('Bạn cần đăng nhập doanh nghiệp để xem tin tuyển dụng.');
-        }
-        console.log(req.session.businessID);
-        Job.find({ businessID: req.session.businessID })
-            .then((jobs) => {
-                res.render('business/jobs/list', {
-                    jobs: multipleMongooseToObject(jobs),
+    show(req, res, next) {
+        Job.findOne({ slug: req.params.slug }) // trang con
+            .then((job) => {
+                req.session.jobId = job._id;
+                console.log('Id: ', req.session.jobId);
+                res.render('jobs/detail', {
+                    job: mongooseToObject(job),
                 });
-            })
-            .catch(next);
+            });
     }
 
     create(req, res, next) {
@@ -48,6 +44,34 @@ class JobController {
             .catch((error) => {
                 console.error('Error saving job:', error);
                 res.status(500).send('Đã có lỗi xảy ra khi lưu công việc.');
+            });
+    }
+
+    apply(req, res, next) {
+        const userId = req.session.userId;
+        const jobId = req.session.jobId;
+        Job.findById(jobId)
+            .then((job) => {
+                if (!job) {
+                    return res.status(404).send('❌ Công việc không tồn tại.');
+                }
+
+                // Kiểm tra nếu user đã apply rồi thì không thêm nữa
+                if (job.applicants.includes(userId)) {
+                    return res.send('✅ Bạn đã ứng tuyển công việc này rồi.');
+                }
+
+                // Thêm userId vào mảng applicants
+                job.applicants.push(userId);
+
+                return job.save();
+            })
+            .then(() => {
+                res.send('✅ Ứng tuyển công việc thành công!');
+            })
+            .catch((error) => {
+                console.error('[Apply Job Error]', error);
+                next(error);
             });
     }
 }

@@ -44,6 +44,16 @@
         </tr>
 
         <tr>
+          <td><label for="password">Mật khẩu:</label></td>
+          <td><input type="password" id="password" name="password" required minlength="6"></td>
+        </tr>
+
+        <tr>
+          <td><label for="confirm_password">Xác nhận mật khẩu:</label></td>
+          <td><input type="password" id="confirm_password" name="confirm_password" required minlength="6"></td>
+        </tr>
+
+        <tr>
           <td colspan="2">
             <button type="submit">Tạo</button>
           </td>
@@ -54,6 +64,19 @@
     <br>
     <a href="/business/register">Are you hiring?</a>
   </center>
+
+  <script>
+    // Check confirm password client-side trước khi gửi
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (e) {
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirm_password').value;
+      if (password !== confirmPassword) {
+        e.preventDefault();
+        alert('❌ Mật khẩu và xác nhận mật khẩu không khớp.');
+      }
+    });
+  </script>
 </body>
 
 </html>

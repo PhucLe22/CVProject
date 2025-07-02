@@ -43,7 +43,7 @@ const CV = new Schema(
 
         achievementsAndHackathons: [String], // có thể là mảng string hoặc sau này đổi thành object
 
-        slug: { type: String, unique: true }, // dùng cho routing
+        slug: { type: String }, // dùng cho routing
     },
     {
         timestamps: true,

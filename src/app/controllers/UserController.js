@@ -24,11 +24,23 @@ class UserController {
     }
     store(req, res, next) {
         const formData = req.body;
-        const user = new User(formData);
-        user.save()
-            .then(() => res.redirect('/users'))
-            .catch((error) => {});
-        // res.send('Save successfully')
+
+        bcrypt
+            .hash(formData.password, 10)
+            .then((hashedPassword) => {
+                formData.password = hashedPassword;
+                const user = new User(formData);
+                return user.save();
+            })
+            .then(() => res.redirect('/users/login')) // chuyển về trang login sau khi đăng ký
+            .catch((error) => {
+                if (error.code === 11000) {
+                    res.status(400).send('❌ Email đã được sử dụng.');
+                } else {
+                    console.error('[User Store Error]', error);
+                    res.status(500).send('❌ Đã xảy ra lỗi khi đăng ký.');
+                }
+            });
     }
 
     login(req, res, next) {
@@ -54,11 +66,6 @@ class UserController {
                         console.error('Lỗi khi so sánh bcrypt:', err);
                     });
 
-                // test
-                bcrypt.hash('admin123', 10).then((hashed) => {
-                    console.log('Hash của admin123:', hashed);
-                });
-
                 // So sánh password (nếu đã mã hóa)
                 bcrypt.compare(password, user.password).then((isMatch) => {
                     if (!isMatch) {
@@ -70,9 +77,10 @@ class UserController {
                         console.log('session:', req.session.userId);
                         console.log(user.role);
                         if (user.role === 1) {
-                            res.render('site');
+                            res.redirect('/');
                         } else if (user.role === 0) {
                             res.redirect('/admin');
+                            // res.render('admin/home', { layout: 'main-admin' });
                         } else {
                             return res
                                 .status(403)
@@ -85,6 +93,14 @@ class UserController {
                 console.error('[Login Error]', error);
                 next(error);
             });
+    }
+
+    session(req, res, next) {
+        if (!req.session.userId) {
+            return res.redirect('/users/login'); // Chưa đăng nhập
+        } else {
+            res.redirect('/jobs/apply');
+        }
     }
 }
 

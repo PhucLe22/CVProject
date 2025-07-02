@@ -4,20 +4,26 @@ const Schema = mongoose.Schema;
 
 const User = new Schema(
     {
-        username: { type: String, minLength: 1, maxLength: 255 },
+        username: {
+            type: String,
+            minLength: 1,
+            maxLength: 255,
+            required: true,
+        },
         ava: { type: String },
-        email: { type: String, require: true, unique: true },
+        email: { type: String, required: true, unique: true },
         phonenumber: { type: String },
         major: { type: String },
         brithday: { type: Date },
-        password: { type: String, require: true },
-        role: { type: Number },
+        password: { type: String, required: true },
+        role: { type: Number, default: 1 }, // mặc định role user = 1
         slug: { type: String, unique: true },
     },
     {
         timestamps: true,
     },
 );
+
 // Tự động tạo slug trước khi lưu
 User.pre('save', function (next) {
     if (this.isModified('username')) {

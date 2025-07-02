@@ -4,6 +4,7 @@ const router = express.Router();
 const businessController = require('../app/controllers/Business/BusinessController');
 const { route } = require('./admin');
 
+router.get('/list', businessController.list);
 router.get('/logout', businessController.logout);
 router.post('/verify-otp', businessController.verifyOtp);
 router.post('/inspect', businessController.inspect);

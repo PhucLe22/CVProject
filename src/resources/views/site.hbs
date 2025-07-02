@@ -1,1 +1,6 @@
 This is homepage!
+
+{{#each jobs}}
+{{this.title}}
+<form action="/jobs/{{this.slug}}"><button>Apply</button></form>
+{{/each}}

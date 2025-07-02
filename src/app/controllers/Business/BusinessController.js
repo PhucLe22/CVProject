@@ -15,6 +15,22 @@ class CompanyController {
         res.render('business/home', { layout: 'main-business' }); // Đã đăng nhập, hiển thị trang home
     }
 
+    list(req, res, next) {
+        if (!req.session.businessID) {
+            return res
+                .status(401)
+                .send('Bạn cần đăng nhập doanh nghiệp để xem tin tuyển dụng.');
+        }
+        console.log(req.session.businessID);
+        Job.find({ businessID: req.session.businessID })
+            .then((jobs) => {
+                res.render('business/jobs/list', {
+                    jobs: multipleMongooseToObject(jobs),
+                });
+            })
+            .catch(next);
+    }
+
     business(req, res, next) {
         res.render('business/register');
     }

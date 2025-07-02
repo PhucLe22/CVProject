@@ -1,13 +1,13 @@
-const Course = require('../models/Course');
+const Job = require('../models/Job');
 const { multipleMongooseToObject } = require('../../util/mongoose');
 
 class SiteController {
     // [GET] /
     index(req, res, next) {
-        Course.find({})
-            .then((courses) => {
+        Job.find({})
+            .then((jobs) => {
                 res.render('site', {
-                    courses: multipleMongooseToObject(courses),
+                    jobs: multipleMongooseToObject(jobs), // n objects
                 });
             })
             .catch(next);
