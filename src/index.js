@@ -3,8 +3,8 @@ const express = require('express');
 const path = require('path');
 const { engine } = require('express-handlebars');
 const morgan = require('morgan');
+const port = process.env.PORT || 3000;
 const app = express();
-const port = 3000;
 const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
@@ -12,6 +12,8 @@ const session = require('express-session');
 const hbs = require('express-handlebars');
 const exphbs = require('express-handlebars');
 const handlebarsHelpers = require('../src/helpers/handlebars');
+
+require('dotenv').config();
 
 // Connect to DB
 db.connect();
@@ -30,7 +32,7 @@ app.use(express.json()); // cho fetch/ajax hoặc postman
 // Middleware session
 app.use(
     session({
-        secret: 'secret-key-abc123',
+        secret: process.env.SESSION_SECRET || 'secret-key-abc123',
         resave: false,
         saveUninitialized: true,
         cookie: { secure: false }, // false khi dùng localhost (không có HTTPS)
@@ -62,6 +64,7 @@ app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views')); //_dirname == contextPath
 
 route(app);
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
