@@ -4,29 +4,30 @@ const { multipleMongooseToObject } = require('../../util/mongoose');
 const session = require('express-session');
 
 class JobController {
-    show(req, res, next) {
-        Job.findOne({ slug: req.params.slug }) // trang con
-            .then((job) => {
-                req.session.jobId = job._id;
-                console.log('Id: ', req.session.jobId);
-                res.render('jobs/detail', {
-                    job: mongooseToObject(job),
-                });
-            });
-    }
-
     create(req, res, next) {
+        console.log('==> Bắt đầu vào create jobs');
         console.log('Session: ', req.session.business);
+
         if (!req.session.businessID) {
-            return res.redirect('/business/login'); // hoặc trả về 401
+            console.log('Chưa đăng nhập doanh nghiệp, redirect');
+            return res.redirect('/business/login');
         }
+
+        console.log('Qua check đăng nhập, chuẩn bị render');
         res.render('jobs/create', {
             layout: 'main-business',
             isBusiness: true,
             business: req.session.business,
         });
     }
-
+    show(req, res, next) {
+        Job.findOne({ slug: req.params.slug }) // trang con
+            .then((job) => {
+                res.render('jobs/detail', {
+                    job: mongooseToObject(job),
+                });
+            });
+    }
     store(req, res, next) {
         const formData = req.body;
 

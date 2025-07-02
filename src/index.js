@@ -11,9 +11,11 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const hbs = require('express-handlebars');
 const exphbs = require('express-handlebars');
+const mongoose = require('mongoose');
 const handlebarsHelpers = require('../src/helpers/handlebars');
 
 require('dotenv').config();
+mongoose.connect(process.env.MONGODB_URI);
 
 // Connect to DB
 db.connect();
