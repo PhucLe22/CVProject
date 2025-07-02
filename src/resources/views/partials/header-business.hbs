@@ -4,70 +4,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navbar Layout</title>
+    <title>Modern Business Navbar</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
         .custom-navbar {
-            background-color: #f8f9fa;
-            border-bottom: 1px solid #dee2e6;
-            padding: 0.75rem 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .custom-navbar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 300% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
         }
 
         .navbar-brand {
-            font-weight: bold;
-            color: #007bff !important;
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
-        .dropdown-menu {
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid #dee2e6;
+        .navbar-brand:hover {
+            transform: scale(1.05);
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.3));
         }
 
-        .dropdown-item {
-            padding: 8px 16px;
-            transition: background-color 0.2s ease;
+        .navbar-brand i {
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
         }
 
-        .dropdown-item:hover {
-            background-color: #f1f3f5;
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .nav-link {
-            color: #495057 !important;
+            color: #4a5568 !important;
+            font-weight: 600;
             margin: 0 8px;
-            padding: 8px 12px !important;
-            border-radius: 4px;
-            transition: all 0.2s ease;
+            padding: 12px 20px !important;
+            border-radius: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: all 0.5s;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
         }
 
         .nav-link:hover {
-            background-color: #e9ecef;
-            color: #007bff !important;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
         }
 
-        .btn-outline-primary {
-            margin-left: 8px;
+        .nav-link i {
+            margin-right: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover i {
+            transform: rotate(360deg);
+        }
+
+        .dropdown-menu {
+            border: none;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 20px 0;
+            margin-top: 10px;
+        }
+
+        .dropdown-item {
+            padding: 12px 25px;
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.3s ease;
+            border-radius: 0;
+            position: relative;
+        }
+
+        .dropdown-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            color: #667eea;
+            padding-left: 35px;
+        }
+
+        .dropdown-item i {
+            width: 20px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .dropdown-item:hover i {
+            transform: scale(1.2);
+            color: #667eea;
+        }
+
+        .dropdown-divider {
+            margin: 15px 20px;
+            border-top: 2px solid rgba(102, 126, 234, 0.1);
         }
 
         .navbar-toggler {
             border: none;
-            padding: 4px 8px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-toggler:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
         }
 
         .navbar-toggler:focus {
-            box-shadow: none;
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25);
         }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        .container-fluid {
+            padding: 0 2rem;
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(20px);
+                border-radius: 20px;
+                margin-top: 15px;
+                padding: 20px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-link {
+                margin: 5px 0;
+                text-align: center;
+            }
+
+            .dropdown-menu {
+                background: rgba(248, 249, 250, 0.95);
+                margin: 10px 0;
+            }
+        }
+
+        /* Demo content */
     </style>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg custom-navbar">
         <div class="container-fluid">
             <!-- Logo/Brand -->
             <a class="navbar-brand" href="/home">
-                <i class="fas fa-graduation-cap me-2"></i>
+                <i class="fas fa-briefcase"></i>
                 Business
             </a>
 
@@ -81,35 +260,10 @@
             <div class="collapse navbar-collapse" id="navbarContent">
                 <!-- Menu chính bên trái -->
                 <ul class="navbar-nav me-auto">
-                    <!-- Dropdown Courses -->
-                    {{!-- <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Courses
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/courses/create">
-                                    <i class="fas fa-plus me-2"></i>Add Courses
-                                </a></li>
-                            <li><a class="dropdown-item" href="/courses">
-                                    <i class="fas fa-list me-2"></i>All Courses
-                                </a></li>
-                            <li><a class="dropdown-item" href="/test/stored/courses">
-                                    <i class="fas fa-bookmark me-2"></i>My Courses
-                                </a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/courses/edit">
-                                    <i class="fas fa-edit me-2"></i>Edit Courses
-                                </a></li>
-                        </ul>
-                    </li> --}}
-
                     <!-- Business menu -->
                     <li class="nav-item">
                         <a class="nav-link" href="/business/register">
-                            <i class="fas fa-building me-1"></i>Business Register
+                            <i class="fas fa-building"></i>Business Register
                         </a>
                     </li>
                 </ul>
@@ -117,31 +271,25 @@
                 <!-- Menu user bên phải -->
                 <ul class="navbar-nav">
                     <!-- User dropdown -->
-                    <!-- User dropdown -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
                             <!-- Hiển thị tên user / business / account -->
-                            {{#if currentUser}}
-                            <i class="fas fa-user me-1"></i> {{currentUser.name}}
-                            {{else}}
-                            {{#if currentBusiness}}
-                            <i class="fas fa-building me-1"></i> {{currentBusiness.title}}
-                            {{else}}
-                            <i class="fas fa-user me-1"></i> Account
-                            {{/if}}
-                            {{/if}}
+                            <i class="fas fa-user"></i> Account
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li><a class="dropdown-item" href="/users/create">
-                                    <i class="fas fa-user-plus me-2"></i>User Register
+                                    <i class="fas fa-user-plus"></i>User Register
                                 </a></li>
                             <li><a class="dropdown-item" href="/users/login">
-                                    <i class="fas fa-user-plus me-2"></i>User Login
+                                    <i class="fas fa-sign-in-alt"></i>User Login
                                 </a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
                             <li><a class="dropdown-item" href="/business/logout">
-                                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                                    <i class="fas fa-sign-out-alt"></i>Logout
                                 </a></li>
                         </ul>
                     </li>
@@ -149,9 +297,9 @@
             </div>
         </div>
     </nav>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-
 </body>
 
 </html>
