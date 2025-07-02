@@ -12,7 +12,11 @@ class CompanyController {
             return res.redirect('/business/login'); // Chưa đăng nhập, chuyển về trang login
         }
 
-        res.render('business/home', { layout: 'main-business' }); // Đã đăng nhập, hiển thị trang home
+        res.render('business/home', {
+            layout: 'main-business',
+            businessName: req.session.businsessName, // truyền trực tiếp
+        });
+        console.log(req.session.businsessName);
     }
 
     list(req, res, next) {
@@ -67,7 +71,11 @@ class CompanyController {
     }
 
     login(req, res, next) {
-        res.render('business/login');
+        res.render('business/login', {
+            layout: 'main',
+            noHeader: true,
+            noFooter: true,
+        });
     }
 
     inspect(req, res, next) {
@@ -124,11 +132,17 @@ class CompanyController {
                     req.session.email = email; // cần thiết để lấy lại sau
                     req.session.businessID = business._id;
                     req.session.businessAva = business.logo;
+                    req.session.businsessName = business.name;
 
                     console.log(req.session.businessID);
 
                     // Gửi form nhập OTP
-                    res.render('business/verify-otp', { email });
+                    res.render('business/verify-otp', {
+                        layout: 'main',
+                        noHeader: true,
+                        noFooter: true,
+                        email, // giữ lại giá trị email
+                    });
                 } catch (emailErr) {
                     console.error('Lỗi gửi email:', emailErr);
                     res.status(500).send('Không gửi được email xác nhận');

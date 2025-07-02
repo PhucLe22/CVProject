@@ -5,88 +5,493 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng Ký Doanh Nghiệp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+            background-size: 60px 60px;
+            opacity: 0.3;
+            animation: movePattern 20s linear infinite;
+        }
+
+        @keyframes movePattern {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-section {
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 100%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+            font-size: 1rem;
+            position: relative;
+        }
+
+        .form-label .required {
+            color: #e53e3e;
+            margin-left: 4px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            resize: vertical;
+            min-height: 150px;
+            font-family: inherit;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 20px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .login-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: 70%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 10%;
+            left: 15%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+        /* Input icons */
+        .input-group {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .form-container {
+                margin: 0 15px;
+                padding: 30px 25px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <center>
-        <h1>Đăng Ký Doanh Nghiệp</h1>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="hero-title">Đăng Ký Doanh Nghiệp</h1>
+                <p class="hero-subtitle">Tham gia cộng đồng doanh nghiệp và mở rộng cơ hội kinh doanh</p>
+            </div>
+        </div>
+    </div>
 
-        <form action="/business/check" method="POST">
-            <table>
-                <tr>
-                    <td><label>Tên doanh nghiệp:</label></td>
-                    <td><input type="text" name="name" required /></td>
-                </tr>
+    <!-- Form Section -->
+    <div class="form-section">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
 
-                <tr>
-                    <td><label>Mã số thuế (taxId):</label></td>
-                    <td><input type="text" name="taxId" required /></td>
-                </tr>
+        <div class="container">
+            <div class="form-container">
+                <form action="/business/check" method="POST">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-building"></i> Tên doanh nghiệp
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" name="name" class="form-control" required
+                                placeholder="Nhập tên doanh nghiệp">
+                        </div>
 
-                <tr>
-                    <td><label>Email:</label></td>
-                    <td><input type="email" name="email" required /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-id-card"></i> Mã số thuế (taxId)
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text" name="taxId" class="form-control" required placeholder="Nhập mã số thuế">
+                        </div>
 
-                <tr>
-                    <td><label>Password:</label></td>
-                    <td><input type="password" name="password" required /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-envelope"></i> Email
+                                <span class="required">*</span>
+                            </label>
+                            <input type="email" name="email" class="form-control" required
+                                placeholder="example@company.com">
+                        </div>
 
-                <tr>
-                    <td><label>Số điện thoại:</label></td>
-                    <td><input type="text" name="phone" /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-lock"></i> Password
+                                <span class="required">*</span>
+                            </label>
+                            <input type="password" name="password" class="form-control" required
+                                placeholder="Nhập mật khẩu">
+                        </div>
 
-                <tr>
-                    <td><label>Địa chỉ:</label></td>
-                    <td><input type="text" name="address" /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-phone"></i> Số điện thoại
+                            </label>
+                            <input type="text" name="phone" class="form-control" placeholder="+84 123 456 789">
+                        </div>
 
-                <tr>
-                    <td><label>Quy mô:</label></td>
-                    <td>
-                        <select name="scale">
-                            <option value="1-10">1-10</option>
-                            <option value="11-50">11-50</option>
-                            <option value="51-200">51-200</option>
-                            <option value="201-500">201-500</option>
-                            <option value="500+">500+</option>
-                        </select>
-                    </td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-users"></i> Quy mô
+                            </label>
+                            <select name="scale" class="form-select">
+                                <option value="1-10">1-10 nhân viên</option>
+                                <option value="11-50">11-50 nhân viên</option>
+                                <option value="51-200">51-200 nhân viên</option>
+                                <option value="201-500">201-500 nhân viên</option>
+                                <option value="500+">500+ nhân viên</option>
+                            </select>
+                        </div>
 
-                <tr>
-                    <td><label>Vốn điều lệ:</label></td>
-                    <td><input type="text" name="capital" /></td>
-                </tr>
+                        <div class="form-group full-width">
+                            <label class="form-label">
+                                <i class="fas fa-map-marker-alt"></i> Địa chỉ
+                            </label>
+                            <input type="text" name="address" class="form-control" placeholder="Nhập địa chỉ công ty">
+                        </div>
 
-                <tr>
-                    <td><label>Website:</label></td>
-                    <td><input type="text" name="website" /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-dollar-sign"></i> Vốn điều lệ
+                            </label>
+                            <input type="text" name="capital" class="form-control" placeholder="VD: 1,000,000,000 VND">
+                        </div>
 
-                <tr>
-                    <td><label>Logo (URL):</label></td>
-                    <td><input type="text" name="logo" /></td>
-                </tr>
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="fas fa-globe"></i> Website
+                            </label>
+                            <input type="text" name="website" class="form-control"
+                                placeholder="https://yourcompany.com">
+                        </div>
 
-                <tr>
-                    <td><label>Mô tả:</label></td>
-                    <td><textarea name="description" rows="4" cols="30"></textarea></td>
-                </tr>
+                        <div class="form-group full-width">
+                            <label class="form-label">
+                                <i class="fas fa-image"></i> Logo (URL)
+                            </label>
+                            <input type="text" name="logo" class="form-control"
+                                placeholder="https://example.com/logo.png">
+                        </div>
 
-                <tr>
-                    <td colspan="2">
-                        <button type="submit">Gửi đăng ký</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
+                        <div class="form-group full-width">
+                            <label class="form-label">
+                                <i class="fas fa-align-left"></i> Mô tả
+                            </label>
+                            <textarea name="description" class="form-textarea"></textarea>
+                        </div>
+                    </div>
 
-        <br>
-        <a href="/business/login">Did you have your own account?</a>
-    </center>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Gửi đăng ký
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    <i class="fas fa-user-check"></i>
+                    <a href="/business/login">Đã có tài khoản? Đăng nhập ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </body>
 
 </html>

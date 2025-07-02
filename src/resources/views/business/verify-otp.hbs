@@ -1,9 +1,550 @@
-<h2>Nhập mã OTP được gửi đến email</h2>
-<form action="/business/verify-otp" method="POST">
-    <input type="hidden" name="email" value="<%= email %>" />
+<!DOCTYPE html>
+<html lang="vi">
 
-    <label>Mã OTP:</label>
-    <input type="text" name="otp" maxlength="6" required />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xác Thực OTP</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <button type="submit">Xác nhận</button>
-</form>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+        }
+
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 3s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 6s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 30%;
+            right: 5%;
+            animation-delay: 9s;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(180deg);
+            }
+        }
+
+        .otp-container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            text-align: center;
+            animation: slideInUp 0.8s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .otp-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 100%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .otp-icon {
+            font-size: 4rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+        }
+
+        .otp-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .otp-subtitle {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .email-display {
+            background: rgba(102, 126, 234, 0.1);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            font-weight: 600;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .otp-form {
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .otp-input-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .otp-digit {
+            width: 60px;
+            height: 60px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2d3748;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .otp-digit:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.5s;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .resend-section {
+            padding: 20px;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .resend-text {
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        .resend-btn {
+            background: none;
+            border: none;
+            color: #667eea;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: underline;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .resend-btn:hover {
+            color: #764ba2;
+        }
+
+        .resend-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .countdown {
+            color: #e53e3e;
+            font-weight: 600;
+        }
+
+        .back-link {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .otp-container {
+                margin: 0 15px;
+                padding: 30px 25px;
+            }
+
+            .otp-title {
+                font-size: 1.6rem;
+            }
+
+            .otp-digit {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .otp-input-container {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .otp-digit {
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+            }
+
+            .otp-input-container {
+                gap: 5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="floating-shapes">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <div class="otp-container">
+        <div class="otp-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+
+        <h2 class="otp-title">Xác Thực OTP</h2>
+        <p class="otp-subtitle">
+            Nhập mã OTP gồm 6 chữ số được gửi đến email của bạn để hoàn tất quá trình đăng ký
+        </p>
+
+        <div class="email-display">
+            <i class="fas fa-envelope"></i>
+            <span id="emailDisplay">example@company.com</span>
+        </div>
+
+        <form action="/business/verify-otp" method="POST" class="otp-form" id="otpForm">
+            <input type="hidden" name="email" value="" id="hiddenEmail" />
+
+            <label class="form-label">
+                <i class="fas fa-key"></i> Mã OTP (6 chữ số)
+            </label>
+
+            <div class="otp-input-container">
+                <input type="text" class="otp-digit" maxlength="1" id="otp1" />
+                <input type="text" class="otp-digit" maxlength="1" id="otp2" />
+                <input type="text" class="otp-digit" maxlength="1" id="otp3" />
+                <input type="text" class="otp-digit" maxlength="1" id="otp4" />
+                <input type="text" class="otp-digit" maxlength="1" id="otp5" />
+                <input type="text" class="otp-digit" maxlength="1" id="otp6" />
+            </div>
+
+            <input type="hidden" name="otp" id="otpValue" />
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-check-circle"></i> Xác nhận OTP
+            </button>
+        </form>
+
+        <div class="resend-section">
+            <div class="resend-text">Không nhận được mã?</div>
+            <button class="resend-btn" id="resendBtn">
+                <i class="fas fa-redo"></i> Gửi lại mã OTP
+            </button>
+            <div class="countdown" id="countdown" style="display: none;">
+                Gửi lại sau <span id="timer">60</span> giây
+            </div>
+        </div>
+
+        <a href="/business/register" class="back-link">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại đăng ký
+        </a>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <script>
+        // Set email from URL params or server-side template
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email') || 'example@company.com';
+        document.getElementById('emailDisplay').textContent = email;
+        document.getElementById('hiddenEmail').value = email;
+
+        // OTP input handling
+        const otpInputs = document.querySelectorAll('.otp-digit');
+        const otpValue = document.getElementById('otpValue');
+        const submitBtn = document.getElementById('submitBtn');
+
+        otpInputs.forEach((input, index) => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+
+                // Only allow numbers
+                if (!/^\d*$/.test(value)) {
+                    e.target.value = '';
+                    return;
+                }
+
+                // Move to next input
+                if (value && index < otpInputs.length - 1) {
+                    otpInputs[index + 1].focus();
+                }
+
+                updateOTPValue();
+            });
+
+            input.addEventListener('keydown', (e) => {
+                // Handle backspace
+                if (e.key === 'Backspace' && !input.value && index > 0) {
+                    otpInputs[index - 1].focus();
+                }
+
+                // Handle paste
+                if (e.key === 'v' && (e.ctrlKey || e.metaKey)) {
+                    e.preventDefault();
+                    navigator.clipboard.readText().then(text => {
+                        const numbers = text.replace(/\D/g, '').slice(0, 6);
+                        numbers.split('').forEach((digit, i) => {
+                            if (otpInputs[i]) {
+                                otpInputs[i].value = digit;
+                            }
+                        });
+                        updateOTPValue();
+                        if (numbers.length === 6) {
+                            otpInputs[5].focus();
+                        }
+                    });
+                }
+            });
+        });
+
+        function updateOTPValue() {
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+            otpValue.value = otp;
+
+            // Enable/disable submit button
+            if (otp.length === 6) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        // Resend OTP functionality
+        const resendBtn = document.getElementById('resendBtn');
+        const countdown = document.getElementById('countdown');
+        const timer = document.getElementById('timer');
+        let countdownInterval;
+
+        function startCountdown() {
+            let seconds = 60;
+            resendBtn.disabled = true;
+            countdown.style.display = 'block';
+
+            countdownInterval = setInterval(() => {
+                timer.textContent = seconds;
+                seconds--;
+
+                if (seconds < 0) {
+                    clearInterval(countdownInterval);
+                    resendBtn.disabled = false;
+                    countdown.style.display = 'none';
+                }
+            }, 1000);
+        }
+
+        resendBtn.addEventListener('click', () => {
+            // Here you would make an API call to resend OTP
+            console.log('Resending OTP to:', email);
+            startCountdown();
+
+            // Clear current OTP inputs
+            otpInputs.forEach(input => input.value = '');
+            otpInputs[0].focus();
+            updateOTPValue();
+        });
+
+        // Form submission
+        document.getElementById('otpForm').addEventListener('submit', (e) => {
+            const otp = otpValue.value;
+            if (otp.length !== 6) {
+                e.preventDefault();
+                alert('Vui lòng nhập đủ 6 chữ số OTP');
+                return;
+            }
+        });
+
+        // Auto-focus first input
+        otpInputs[0].focus();
+
+        // Initialize
+        updateOTPValue();
+
+        // Optional: Start countdown on page load (if OTP was just sent)
+        if (urlParams.get('sent') === 'true') {
+            startCountdown();
+        }
+    </script>
+</body>
+
+</html>

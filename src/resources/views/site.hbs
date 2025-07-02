@@ -1,6 +1,339 @@
-This is homepage!
+<!DOCTYPE html>
+<html lang="vi">
 
-{{#each jobs}}
-{{this.title}}
-<form action="/jobs/{{this.slug}}"><button>Apply</button></form>
-{{/each}}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jobs Homepage</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 80px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .jobs-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: #2d3748;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .job-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0;
+            flex: 1;
+            margin-right: 15px;
+        }
+
+        .job-type {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .job-details {
+            margin-bottom: 25px;
+        }
+
+        .job-details p {
+            margin: 8px 0;
+        }
+
+        .job-contact,
+        .job-location,
+        .job-salary {
+            color: #4a5568;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+
+        .job-details i {
+            width: 20px;
+            margin-right: 10px;
+            color: #667eea;
+        }
+
+        .job-form {
+            margin: 0;
+        }
+
+        .apply-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .apply-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: all 0.5s;
+        }
+
+        .apply-btn:hover::before {
+            left: 100%;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .apply-btn i {
+            margin-right: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .jobs-grid {
+                grid-template-columns: 1fr;
+                padding: 0 15px;
+            }
+
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-type {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Find Your Dream Job</h1>
+            <p class="hero-subtitle">Discover amazing career opportunities with top companies</p>
+        </div>
+    </div>
+
+    <!-- Jobs Section -->
+    <div class="jobs-section">
+        <div class="container">
+            <h2 class="section-title">Available Positions</h2>
+            <div class="jobs-grid">
+                <!-- {{#each jobs}} -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">{{this.title}}</h3>
+                        <span class="job-type">Available</span>
+                    </div>
+                    <div class="job-details">
+                        <p class="job-contact"><i class="fas fa-phone"></i> {{this.contact}}</p>
+                        <p class="job-location"><i class="fas fa-map-marker-alt"></i> {{this.location}}</p>
+                        <p class="job-salary"><i class="fas fa-dollar-sign"></i> {{this.salary}}</p>
+                    </div>
+                    <form action="/jobs/{{this.slug}}" class="job-form">
+                        <button type="submit" class="apply-btn">
+                            <i class="fas fa-paper-plane"></i>Apply
+                        </button>
+                    </form>
+                </div>
+                <!-- {{/each}} -->
+
+                <!-- Demo data for preview -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Software Engineer</h3>
+                        <span class="job-type">Available</span>
+                    </div>
+                    <div class="job-details">
+                        <p class="job-contact"><i class="fas fa-phone"></i> +84 123 456 789</p>
+                        <p class="job-location"><i class="fas fa-map-marker-alt"></i> Ho Chi Minh City</p>
+                        <p class="job-salary"><i class="fas fa-dollar-sign"></i> $2000 - $3500</p>
+                    </div>
+                    <form action="/jobs/software-engineer" class="job-form">
+                        <button type="submit" class="apply-btn">
+                            <i class="fas fa-paper-plane"></i>Apply
+                        </button>
+                    </form>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Marketing Specialist</h3>
+                        <span class="job-type">Available</span>
+                    </div>
+                    <div class="job-details">
+                        <p class="job-contact"><i class="fas fa-phone"></i> contact@company.com</p>
+                        <p class="job-location"><i class="fas fa-map-marker-alt"></i> Da Nang</p>
+                        <p class="job-salary"><i class="fas fa-dollar-sign"></i> $1500 - $2200</p>
+                    </div>
+                    <form action="/jobs/marketing-specialist" class="job-form">
+                        <button type="submit" class="apply-btn">
+                            <i class="fas fa-paper-plane"></i>Apply
+                        </button>
+                    </form>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <h3 class="job-title">Graphic Designer</h3>
+                        <span class="job-type">Available</span>
+                    </div>
+                    <div class="job-details">
+                        <p class="job-contact"><i class="fas fa-phone"></i> hr@design-studio.vn</p>
+                        <p class="job-location"><i class="fas fa-map-marker-alt"></i> Remote Work</p>
+                        <p class="job-salary"><i class="fas fa-dollar-sign"></i> $1800 - $2800</p>
+                    </div>
+                    <form action="/jobs/graphic-designer" class="job-form">
+                        <button type="submit" class="apply-btn">
+                            <i class="fas fa-paper-plane"></i>Apply
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+
+</html>

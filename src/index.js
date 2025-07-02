@@ -37,7 +37,10 @@ app.use(
         secret: process.env.SESSION_SECRET || 'secret-key-abc123',
         resave: false,
         saveUninitialized: true,
-        cookie: { secure: false }, // false khi dùng localhost (không có HTTPS)
+        cookie: {
+            secure: false, // true nếu deploy HTTPS
+            maxAge: 3 * 60 * 60 * 1000, // 3 giờ (miligiây)
+        }, // false khi dùng localhost (không có HTTPS)
     }),
 );
 
