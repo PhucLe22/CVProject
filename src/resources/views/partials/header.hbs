@@ -11,6 +11,8 @@
       background-color: #f8f9fa;
       border-bottom: 1px solid #dee2e6;
       padding: 0.75rem 1rem;
+      position: relative;
+      /* Thêm để đảm bảo dropdown hiển thị đúng */
     }
 
     .navbar-brand {
@@ -18,10 +20,24 @@
       color: #007bff !important;
     }
 
+    .dropdown:hover .dropdown-menu {
+      display: block;
+    }
+
     .dropdown-menu {
       border-radius: 8px;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
       border: 1px solid #dee2e6;
+      z-index: 1050;
+      /* Đảm bảo dropdown luôn hiển thị trên cùng */
+      min-width: 200px;
+      /* Tăng độ rộng tối thiểu */
+      display: none;
+      /* Ẩn mặc định */
+    }
+
+    .dropdown-menu.show {
+      display: block;
     }
 
     .dropdown-item {
@@ -58,6 +74,24 @@
     .navbar-toggler:focus {
       box-shadow: none;
     }
+
+    /* Đảm bảo dropdown không bị overflow hidden */
+    .navbar-collapse {
+      overflow: visible;
+    }
+
+    /* Fix cho dropdown trên mobile */
+    @media (max-width: 991.98px) {
+      .dropdown-menu {
+        position: static;
+        float: none;
+        width: auto;
+        margin-top: 0;
+        background-color: transparent;
+        border: 0;
+        box-shadow: none;
+      }
+    }
   </style>
 </head>
 
@@ -81,8 +115,8 @@
       <div class="collapse navbar-collapse" id="navbarContent">
         <!-- Menu chính bên trái -->
         <ul class="navbar-nav me-auto">
-          <!-- Dropdown Courses -->
-          {{!-- <li class="nav-item dropdown">
+          <!-- Dropdown Courses - Bỏ comment để test -->
+          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Courses
             </a>
@@ -103,7 +137,7 @@
                   <i class="fas fa-edit me-2"></i>Edit Courses
                 </a></li>
             </ul>
-          </li> --}}
+          </li>
 
           <!-- Business menu -->
           <li class="nav-item">
@@ -116,51 +150,62 @@
         <!-- Menu user bên phải -->
         <ul class="navbar-nav">
           <!-- User dropdown -->
-          <!-- User dropdown -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <!-- Hiển thị tên user / business / account -->
-              {{#if currentUser}}
-              <i class="fas fa-user me-1"></i> {{currentUser.name}}
-              {{else}}
-              {{#if currentBusiness}}
-              <i class="fas fa-building me-1"></i> {{currentBusiness.title}}
-              {{else}}
               <i class="fas fa-user me-1"></i> Account
-              {{/if}}
-              {{/if}}
             </a>
 
             <ul class="dropdown-menu dropdown-menu-end">
-              {{#if currentUser}}
-              <li><a class="dropdown-item text-danger" href="/users/logout">
-                  <i class="fas fa-sign-out-alt me-2"></i>Logout
-                </a></li>
-              {{else}}
-              {{#if currentBusiness}}
-              <li><a class="dropdown-item text-danger" href="/business/logout">
-                  <i class="fas fa-sign-out-alt me-2"></i>Logout
-                </a></li>
-              {{else}}
               <li><a class="dropdown-item" href="/users/login">
                   <i class="fas fa-sign-in-alt me-2"></i>Login
                 </a></li>
               <li><a class="dropdown-item" href="/users/create">
                   <i class="fas fa-user-plus me-2"></i>Register
                 </a></li>
-              {{/if}}
-              {{/if}}
+              {{!-- <li>
+                <hr class="dropdown-divider">
+              </li> --}}
+              {{!-- <li><a class="dropdown-item text-danger" href="/users/logout">
+                  <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a></li> --}}
             </ul>
           </li>
         </ul>
       </div>
     </div>
   </nav>
-
-
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+  <script>
+    // Đảm bảo Bootstrap dropdown hoạt động
+    document.addEventListener('DOMContentLoaded', function () {
+      // Khởi tạo tất cả dropdown
+      const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
+      const dropdownList = [...dropdownElementList].map(dropdownToggleEl =>
+        new bootstrap.Dropdown(dropdownToggleEl)
+      );
+
+      // Debug - kiểm tra xem có lỗi không
+      console.log('Bootstrap loaded:', typeof bootstrap !== 'undefined');
+      console.log('Dropdowns initialized:', dropdownList.length);
+
+      // Thêm event listener cho click
+      dropdownElementList.forEach(function (element) {
+        element.addEventListener('click', function (e) {
+          e.preventDefault();
+          console.log('Dropdown clicked:', this);
+
+          // Toggle dropdown manually nếu cần
+          const dropdownMenu = this.nextElementSibling;
+          if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
+            dropdownMenu.classList.toggle('show');
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 

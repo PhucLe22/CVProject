@@ -1,74 +1,560 @@
-<div class="mt-4">
-    <h3>Quản lý doanh nghiệp</h3>
+<!DOCTYPE html>
+<html lang="vi">
 
-    <table class="table mt-4">
-        <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Tên doanh nghiệp</th>
-                <th scope="col">Trạng thái</th>
-                <th scope="col">Email</th>
-                <th scope="col" colspan="3">Ngày tạo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each business}}
-            <tr>
-                <th scope="row">{{sum @index 1}}</th>
-                <td><a href="/business/detail">{{this.name}}</a></td>
-                <td>{{this.status}}</td>
-                <td>{{this.email}}</td>
-                <td>{{this.createdAt}}</td>
-                <td>
-                    <a href="/admin/business/{{this._id}}/edit" class="btn btn-link">Edit</a>
-                </td>
-                <td>
-                    <a href="#" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-business-modal"
-                        class="btn btn-link text-danger">Delete</a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-</div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Doanh Nghiệp</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-{{!-- Confirm delete modal --}}
-<div id="delete-business-modal" class="modal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Xoá doanh nghiệp</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.1) 75%);
+            background-size: 60px 60px;
+            opacity: 0.3;
+            animation: movePattern 20s linear infinite;
+        }
+
+        @keyframes movePattern {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .table-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .table-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 100%;
+            animation: gradientShift 4s ease infinite;
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .table-responsive {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+            background: white;
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .table thead th {
+            border: none;
+            padding: 20px 15px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.9rem;
+        }
+
+        .table tbody tr {
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .table tbody tr:hover {
+            background: rgba(102, 126, 234, 0.05);
+            transform: translateX(5px);
+        }
+
+        .table tbody td {
+            padding: 20px 15px;
+            vertical-align: middle;
+            border: none;
+        }
+
+        .table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .business-name {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .business-name:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .status-select {
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-radius: 10px;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background: white;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        .status-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .status-select option[value="approved"] {
+            color: #28a745;
+        }
+
+        .status-select option[value="pending"] {
+            color: #ffc107;
+        }
+
+        .btn-delete {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-delete:hover {
+            color: white;
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .row-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .email-cell {
+            color: #4a5568;
+            font-size: 0.95rem;
+        }
+
+        .date-cell {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 20px;
+            border: none;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(20px);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            border-bottom: none;
+            padding: 20px 30px;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        .modal-body {
+            padding: 30px;
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 20px 30px;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .btn-modal-delete {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-modal-cancel {
+            background: #e2e8f0;
+            border: none;
+            color: #4a5568;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-modal-cancel:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .close {
+            color: white;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-title {
+                font-size: 2rem;
+            }
+
+            .table-section {
+                padding: 20px;
+            }
+
+            .table thead th,
+            .table tbody td {
+                padding: 15px 10px;
+                font-size: 0.9rem;
+            }
+
+            .status-select {
+                min-width: 100px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .spinner-border {
+            color: #667eea;
+        }
+
+        /* Success/Error Messages */
+        .alert-custom {
+            border-radius: 15px;
+            border: none;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Header Section -->
+        <div class="header-section">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <i class="fas fa-building"></i>
+                    Quản Lý Doanh Nghiệp
+                </h1>
+                <p class="header-subtitle">
+                    Quản lý và theo dõi trạng thái các doanh nghiệp đã đăng ký
+                </p>
             </div>
-            <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xoá doanh nghiệp này?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btn-delete-business">Xoá</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Huỷ</button>
+        </div>
+
+        <!-- Table Section -->
+        <div class="table-section">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" width="60">#</th>
+                            <th scope="col">Tên Doanh Nghiệp</th>
+                            <th scope="col" width="150">Trạng Thái</th>
+                            <th scope="col">Email</th>
+                            <th scope="col" width="150">Ngày Tạo</th>
+                            <th scope="col" width="100">Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each business}}
+                        <tr>
+                            <td>
+                                <div class="row-number">{{sum @index 1}}</div>
+                            </td>
+                            <td>
+                                <a href="/business/{{this.slug}}" class="business-name">
+                                    <i class="fas fa-building me-2"></i>
+                                    {{this.name}}
+                                </a>
+                            </td>
+                            <td>
+                                <select class="status-select" data-id="{{this._id}}">
+                                    <option value="approved" {{#ifCond this.status '===' 'approved'
+                                        }}selected{{/ifCond}}>
+                                        ✅ Approved
+                                    </option>
+                                    <option value="pending" {{#ifCond this.status '===' 'pending' }}selected{{/ifCond}}>
+                                        ⏳ Pending
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="email-cell">
+                                <i class="fas fa-envelope me-2"></i>
+                                {{this.email}}
+                            </td>
+                            <td class="date-cell">
+                                <i class="fas fa-calendar me-2"></i>
+                                {{this.createdAt}}
+                            </td>
+                            <td>
+                                <a href="#" data-id="{{this._id}}" data-bs-toggle="modal"
+                                    data-bs-target="#delete-business-modal" class="btn-delete">
+                                    <i class="fas fa-trash"></i>
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-</div>
 
-<form name="delete-business-form" method="POST"></form>
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-business-modal" class="modal fade" tabindex="-1" aria-labelledby="deleteModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Xoá Doanh Nghiệp
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <i class="fas fa-warning me-2"></i>
+                        Bạn có chắc chắn muốn xoá doanh nghiệp này? Hành động này không thể hoàn tác.
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-modal-delete" id="btn-delete-business">
+                        <i class="fas fa-trash me-2"></i>
+                        Xoá
+                    </button>
+                    <button type="button" class="btn btn-modal-cancel" data-bs-dismiss="modal">
+                        <i class="fas fa-times me-2"></i>
+                        Huỷ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let businessId;
-        const deleteForm = document.forms['delete-business-form'];
-        const btnDelete = document.getElementById('btn-delete-business');
+    <!-- Hidden Form for Delete -->
+    <form name="delete-business-form" method="POST" style="display: none;"></form>
 
-        $('#delete-business-modal').on('show.bs.modal', function (event) {
-            const button = $(event.relatedTarget);
-            businessId = button.data('id');
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let businessId;
+            const deleteForm = document.forms['delete-business-form'];
+            const btnDelete = document.getElementById('btn-delete-business');
+            const deleteModal = document.getElementById('delete-business-modal');
+
+            // Handle modal show event
+            deleteModal.addEventListener('show.bs.modal', function (event) {
+                const button = event.relatedTarget;
+                businessId = button.getAttribute('data-id');
+            });
+
+            // Handle delete button click
+            btnDelete.onclick = function () {
+                deleteForm.action = '/admin/business/' + businessId + '?_method=DELETE';
+                deleteForm.submit();
+            };
+
+            // Handle status change
+            document.querySelectorAll('.status-select').forEach(select => {
+                select.addEventListener('change', function () {
+                    const businessId = this.dataset.id;
+                    const newStatus = this.value;
+                    const originalValue = this.value;
+
+                    // Add loading state
+                    this.style.opacity = '0.6';
+                    this.disabled = true;
+
+                    fetch(`/admin/business/${businessId}/status`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ status: newStatus })
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            console.log('Status updated successfully:', data);
+
+                            // Show success feedback
+                            this.style.borderColor = '#28a745';
+                            setTimeout(() => {
+                                this.style.borderColor = '';
+                            }, 2000);
+                        })
+                        .catch(error => {
+                            console.error('Lỗi khi cập nhật:', error);
+
+                            // Revert to original value on error
+                            this.value = originalValue;
+
+                            // Show error feedback
+                            this.style.borderColor = '#dc3545';
+                            setTimeout(() => {
+                                this.style.borderColor = '';
+                            }, 2000);
+                        })
+                        .finally(() => {
+                            // Remove loading state
+                            this.style.opacity = '1';
+                            this.disabled = false;
+                        });
+                });
+            });
         });
+    </script>
+</body>
 
-        btnDelete.onclick = function () {
-            deleteForm.action = '/admin/business/' + businessId + '?_method=DELETE';
-            deleteForm.submit();
-        };
-    });
-</script>
+</html>
