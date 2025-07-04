@@ -52,22 +52,6 @@ class AdminController {
             )
             .catch(next);
     }
-
-    // logout(req, res, next) {
-    //     req.session.destroy((err) => {
-    //         if (err) {
-    //             console.error('Lỗi khi logout:', err);
-    //             return next(err);
-    //         }
-
-    //         // Xoá cookie (nếu muốn)
-    //         res.clearCookie('connect.sid');
-
-    //         // Chuyển hướng sau khi logout
-    //         res.redirect('/user/login');
-    //     });
-    // }
-
     update(req, res, next) {
         console.log('PUT /admin/business/:id/status called');
         console.log('Params:', req.params);

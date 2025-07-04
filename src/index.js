@@ -1,4 +1,3 @@
-// library
 const express = require('express');
 const path = require('path');
 const { engine } = require('express-handlebars');
@@ -14,6 +13,9 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const handlebarsHelpers = require('../src/helpers/handlebars');
 
+// const livereload = require('livereload');
+// const connectLivereload = require('connect-livereload');
+
 require('dotenv').config();
 mongoose.connect(process.env.MONGODB_URI);
 
@@ -28,19 +30,23 @@ app.engine(
     }),
 );
 
+// app.use(morgan('dev'));
+
 app.use(express.urlencoded({ extended: true })); // cho form HTML
 app.use(express.json()); // cho fetch/ajax hoặc postman
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Middleware session
 app.use(
     session({
-        secret: process.env.SESSION_SECRET || 'secret-key-abc123',
+        secret: process.env.SESSION_SECRET,
         resave: false,
         saveUninitialized: true,
         cookie: {
-            secure: false, // true nếu deploy HTTPS
-            maxAge: 3 * 60 * 60 * 1000, // 3 giờ (miligiây)
-        }, // false khi dùng localhost (không có HTTPS)
+            secure: false,
+            maxAge: 3 * 60 * 60 * 1000,
+        },
     }),
 );
 
@@ -51,34 +57,34 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.use(methodOverride('_method'));
-
-// Template engine
-// app.engine(
-//     'hbs',
-//     engine({
-//         extname: '.hbs',
-//         helpers: {
-//             sum: (a, b) => a + b,
-//         },
-//     }),
-// );
-
-app.engine(
-    'hbs',
-    engine({
-        extname: '.hbs',
-        helpers: handlebarsHelpers,
-    }),
-);
-
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'resources', 'views')); //_dirname == contextPath
 
 route(app);
 
+// // Tạo server live reload
+// const liveReloadServer = livereload.createServer();
+// liveReloadServer.watch(path.join(__dirname, 'resources', 'views'));
+
+// // Gắn middleware vào express
+// app.use(connectLivereload());
+
+// // Reload browser khi thay đổi
+// liveReloadServer.server.once("connection", () => {
+//     setTimeout(() => {
+//         liveReloadServer.refresh("/");
+//     }, 100);
+// });
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
+});
+
+app.use((err, req, res, next) => {
+    // Xử lý lỗi tại đây
+    console.error('Lỗi:', err.message);
+    res.status(err.status || 500).json({
+        message: err.message || 'Lỗi máy chủ',
+    });
 });
