@@ -1,6 +1,6 @@
 const Job = require('../models/CV');
-const { mongooseToObject } = require('../../util/mongoose');
-const { multipleMongooseToObject } = require('../../util/mongoose');
+// const { mongooseToObject } = require('../../util/mongoose');
+// const { multipleMongooseToObject } = require('../../util/mongoose');
 const fs = require('fs');
 const UploadedFile = require('../models/CV');
 const { spawn } = require('child_process');

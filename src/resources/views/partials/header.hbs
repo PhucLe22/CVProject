@@ -80,6 +80,80 @@
       overflow: visible;
     }
 
+    /* Style cho button Upload CV */
+    .btn-upload-cv {
+      background-color: #28a745;
+      border-color: #28a745;
+      color: white;
+      margin-left: 8px;
+      margin-right: 8px;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-upload-cv:hover {
+      background-color: #218838;
+      border-color: #1e7e34;
+      color: white;
+    }
+
+    /* Style cho thanh tìm kiếm chính ở giữa */
+    .search-input-main {
+      width: 350px;
+      border-radius: 6px 0 0 6px;
+      border: 1px solid #dee2e6;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    .search-input-main:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .search-button-main {
+      border-radius: 0 6px 6px 0;
+      border: 1px solid #dee2e6;
+      border-left: 0;
+      padding: 8px 12px;
+      background-color: #f8f9fa;
+      color: #495057;
+      transition: all 0.2s ease;
+    }
+
+    .search-button-main:hover {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    .search-container {
+      padding: 8px 16px;
+    }
+
+    .search-input {
+      padding: 6px 12px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      width: 200px;
+      font-size: 14px;
+    }
+
+    .search-button {
+      padding: 6px 12px;
+      margin-left: 8px;
+      border: 1px solid #dee2e6;
+      border-radius: 4px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    .search-button:hover {
+      background-color: #0056b3;
+    }
+
     /* Fix cho dropdown trên mobile */
     @media (max-width: 991.98px) {
       .dropdown-menu {
@@ -90,6 +164,25 @@
         background-color: transparent;
         border: 0;
         box-shadow: none;
+      }
+
+      .btn-upload-cv {
+        margin: 8px 0;
+        width: 100%;
+      }
+
+      .search-input-main {
+        width: 100%;
+      }
+
+      .d-flex.mx-auto {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .d-flex.mx-auto .d-flex.me-3 {
+        margin-bottom: 12px;
+        margin-right: 0 !important;
       }
     }
   </style>
@@ -147,6 +240,24 @@
           </li>
         </ul>
 
+        <!-- Thanh tìm kiếm và Upload CV ở giữa -->
+        <div class="d-flex align-items-center mx-auto">
+          <!-- Search Form -->
+          <form action="/job/search" method="GET" class="d-flex me-3">
+            <div class="input-group">
+              <input type="text" name="keyWord" class="form-control search-input-main"
+                placeholder="Tìm kiếm công việc, khóa học...">
+              <button type="submit" class="btn btn-outline-secondary search-button-main">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <form action="/cv/upload" method="POST">
+          <button class="btn btn-upload-cv" style="width: 300px; margin-left: -100px;" onclick="handleUploadCV()">
+            <i class="fas fa-file-upload me-2"></i>Upload CV
+          </button>
+        </form>
         <!-- Menu user bên phải -->
         <ul class="navbar-nav">
           <!-- User dropdown -->
@@ -155,7 +266,6 @@
               <!-- Hiển thị tên user / business / account -->
               <i class="fas fa-user me-1"></i> Account
             </a>
-
             <ul class="dropdown-menu dropdown-menu-end">
               <li><a class="dropdown-item" href="/users/login">
                   <i class="fas fa-sign-in-alt me-2"></i>Login
@@ -174,7 +284,12 @@
         </ul>
       </div>
     </div>
+
   </nav>
+
+  <!-- Hidden file input for CV upload -->
+  <input type="file" id="cvFileInput" accept=".pdf,.doc,.docx" style="display: none;">
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
@@ -205,6 +320,61 @@
         });
       });
     });
+
+    // Hàm xử lý upload CV
+    function handleUploadCV() {
+      const fileInput = document.getElementById('cvFileInput');
+      fileInput.click();
+    }
+
+    // Xử lý khi file được chọn
+    document.getElementById('cvFileInput').addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        // Kiểm tra loại file
+        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+        if (!allowedTypes.includes(file.type)) {
+          alert('Chỉ chấp nhận file PDF, DOC, hoặc DOCX!');
+          return;
+        }
+
+        // Kiểm tra kích thước file (5MB)
+        if (file.size > 5 * 1024 * 1024) {
+          alert('File không được vượt quá 5MB!');
+          return;
+        }
+
+        // Hiển thị thông báo upload thành công (tạm thời)
+        alert(`File "${file.name}" đã được chọn! Bạn có thể thêm logic upload tại đây.`);
+
+        // TODO: Thêm logic upload file lên server
+        // uploadCVToServer(file);
+      }
+    });
+
+    // Hàm upload CV lên server (cần implement)
+    function uploadCVToServer(file) {
+      const formData = new FormData();
+      formData.append('cv', file);
+
+      // Ví dụ fetch API
+      fetch('/api/upload-cv', {
+        method: 'POST',
+        body: formData
+      })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            alert('Upload CV thành công!');
+          } else {
+            alert('Upload CV thất bại!');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Có lỗi xảy ra khi upload CV!');
+        });
+    }
   </script>
 
 </body>

@@ -75,6 +75,21 @@ class JobController {
                 next(error);
             });
     }
+
+    async search(req, res, next) {
+        try {
+            const { name, description } = req.query;
+            const query = {};
+            if (name) query.name = { $regex: name, $options: 'i' };
+            if (description)
+                query.description = { $regex: description, $options: 'i' };
+            const jobs = await Job.find(query);
+            if (!jobs) res.send('not find');
+            res.json(users);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 module.exports = new JobController();
