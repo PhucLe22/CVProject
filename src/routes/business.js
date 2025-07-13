@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const businessController = require('../app/controllers/Business/BusinessController');
-const { route } = require('./admin');
+const businessController = require('../app/controllers/BusinessController');
 
 router.get('/list', businessController.list);
 router.get('/logout', businessController.logout);

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const adminController = require('../app/controllers/Admin/AdminController');
+const adminController = require('../app/controllers/AdminController');
 
 router.put('/business/:id/status', adminController.update);
 router.get('/business', adminController.show);

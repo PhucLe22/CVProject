@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
-const { engine } = require('express-handlebars');
-const morgan = require('morgan');
+// const { engine } = require('express-handlebars');
+// const morgan = require('morgan');
 const port = process.env.PORT || 3000;
 const app = express();
 const route = require('./routes');
@@ -13,13 +13,9 @@ const exphbs = require('express-handlebars');
 const mongoose = require('mongoose');
 const handlebarsHelpers = require('../src/helpers/handlebars');
 
-// const livereload = require('livereload');
-// const connectLivereload = require('connect-livereload');
-
 require('dotenv').config();
 mongoose.connect(process.env.MONGODB_URI);
 
-// Connect to DB
 db.connect();
 
 app.engine(
@@ -63,23 +59,21 @@ app.set('views', path.join(__dirname, 'resources', 'views')); //_dirname == cont
 
 route(app);
 
-// // Tạo server live reload
-// const liveReloadServer = livereload.createServer();
-// liveReloadServer.watch(path.join(__dirname, 'resources', 'views'));
-
-// // Gắn middleware vào express
-// app.use(connectLivereload());
-
-// // Reload browser khi thay đổi
-// liveReloadServer.server.once("connection", () => {
-//     setTimeout(() => {
-//         liveReloadServer.refresh("/");
-//     }, 100);
-// });
-
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });
+
+const originalLog = console.log;
+console.log = (...args) => {
+    const str = args.join(' ');
+    if (
+        str.includes('Example app listening on port') ||
+        str.includes('success') ||
+        str.includes('Debugger listening')
+    ) {
+        originalLog(...args);
+    }
+};
 
 app.use((err, req, res, next) => {
     // Xử lý lỗi tại đây

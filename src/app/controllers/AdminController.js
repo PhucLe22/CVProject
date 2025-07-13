@@ -1,18 +1,41 @@
-const Course = require('../../models/Business');
-const { multipleMongooseToObject } = require('../../../util/mongoose');
-const { mongooseToObject } = require('../../../util/mongoose');
-const Business = require('../../models/Business');
+const Course = require('../models/Business');
+const { multipleMongooseToObject } = require('../../util/mongoose');
+const { mongooseToObject } = require('../../util/mongoose');
+const Business = require('../models/Business');
 
 class AdminController {
     index(req, res, next) {
         if (req.session.userId) {
-            // Nếu đã đăng nhập thì render trang admin
             res.render('admin/home', { layout: 'main-admin' });
         } else {
-            // Nếu chưa đăng nhập thì chuyển về trang login
             res.redirect('/login');
         }
     }
+
+    async search(req, res, next) {
+        try {
+            const listCourses = await Course.find({});
+            let keyWord = req.body.keyWord;
+            let foundedCourses = null;
+            for (let course in listCourses) {
+                if (
+                    course.name &&
+                    course.name.toLowerCase().include(keyWord.toLowerCase())
+                ) {
+                    foundedCourses.push(course);
+                    break;
+                }
+            }
+            if (foundedCourses) {
+                render('/home', {
+                    courses: multipleMongooseToObject(foundedCourses),
+                });
+            }
+        } catch (err) {
+            next(err);
+        }
+    }
+
     logout(req, res, next) {
         req.session.destroy((err) => {
             if (err) {
@@ -40,7 +63,22 @@ class AdminController {
                 res.render('admin/business/detail', {
                     business: mongooseToObject(business),
                 }); //1 object
-            });
+            })
+            .catch(next);
+    }
+
+    async display(req, res, next) {
+        try {
+            const business = Business.findOne({ slug: req.params.slug }).then(
+                (business) => {
+                    res.render('admin/business/detail', {
+                        business: mongooseToObject(business),
+                    });
+                },
+            );
+        } catch (err) {
+            next(err);
+        }
     }
 
     edit(req, res, next) {
