@@ -126,7 +126,7 @@ def extract_resume_sections(
 
 def main():
     # --- Configuration ---
-    PDF_PATH = r"resume_layout_2.pdf" <- File CV dưới định dạng PDF
+    PDF_PATH = r"resume_layout_2.pdf" 
     OUTPUT_IMG_DIR = "pages_img"
     OCR_OUTPUT_DIR = "ocr_text"
     DPI = 300  # increase for better OCR accuracy

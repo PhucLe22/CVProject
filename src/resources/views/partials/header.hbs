@@ -253,8 +253,10 @@
             </div>
           </form>
         </div>
-        <form action="/cv/upload" method="POST">
-          <button class="btn btn-upload-cv" style="width: 300px; margin-left: -100px;" onclick="handleUploadCV()">
+        <form id="uploadCVForm" action="/cv/upload" method="POST" enctype="multipart/form-data">
+          <input type="file" name="cvFile" id="cvFileInput" accept=".pdf,.doc,.docx" style="display: none;">
+          <button type="button" class="btn btn-upload-cv" style="width: 300px; margin-left: -100px;"
+            onclick="handleUploadCV()">
             <i class="fas fa-file-upload me-2"></i>Upload CV
           </button>
         </form>
@@ -273,12 +275,6 @@
               <li><a class="dropdown-item" href="/users/create">
                   <i class="fas fa-user-plus me-2"></i>Register
                 </a></li>
-              {{!-- <li>
-                <hr class="dropdown-divider">
-              </li> --}}
-              {{!-- <li><a class="dropdown-item text-danger" href="/users/logout">
-                  <i class="fas fa-sign-out-alt me-2"></i>Logout
-                </a></li> --}}
             </ul>
           </li>
         </ul>
@@ -294,25 +290,18 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 
   <script>
-    // Đảm bảo Bootstrap dropdown hoạt động
     document.addEventListener('DOMContentLoaded', function () {
-      // Khởi tạo tất cả dropdown
+      // Khởi tạo dropdown Bootstrap nếu cần
       const dropdownElementList = document.querySelectorAll('.dropdown-toggle');
-      const dropdownList = [...dropdownElementList].map(dropdownToggleEl =>
-        new bootstrap.Dropdown(dropdownToggleEl)
-      );
+      [...dropdownElementList].forEach(el => new bootstrap.Dropdown(el));
 
-      // Debug - kiểm tra xem có lỗi không
+      // Debug
       console.log('Bootstrap loaded:', typeof bootstrap !== 'undefined');
-      console.log('Dropdowns initialized:', dropdownList.length);
 
-      // Thêm event listener cho click
+      // Click thủ công dropdown nếu cần (tuỳ bạn có dùng hay không)
       dropdownElementList.forEach(function (element) {
         element.addEventListener('click', function (e) {
           e.preventDefault();
-          console.log('Dropdown clicked:', this);
-
-          // Toggle dropdown manually nếu cần
           const dropdownMenu = this.nextElementSibling;
           if (dropdownMenu && dropdownMenu.classList.contains('dropdown-menu')) {
             dropdownMenu.classList.toggle('show');
@@ -321,58 +310,55 @@
       });
     });
 
-    // Hàm xử lý upload CV
+    // Hàm xử lý bấm nút Upload CV
     function handleUploadCV() {
-      const fileInput = document.getElementById('cvFileInput');
-      fileInput.click();
+      document.getElementById('cvFileInput').click();
     }
 
     // Xử lý khi file được chọn
     document.getElementById('cvFileInput').addEventListener('change', function (e) {
       const file = e.target.files[0];
-      if (file) {
-        // Kiểm tra loại file
-        const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-        if (!allowedTypes.includes(file.type)) {
-          alert('Chỉ chấp nhận file PDF, DOC, hoặc DOCX!');
-          return;
-        }
+      if (!file) return;
 
-        // Kiểm tra kích thước file (5MB)
-        if (file.size > 5 * 1024 * 1024) {
-          alert('File không được vượt quá 5MB!');
-          return;
-        }
-
-        // Hiển thị thông báo upload thành công (tạm thời)
-        alert(`File "${file.name}" đã được chọn! Bạn có thể thêm logic upload tại đây.`);
-
-        // TODO: Thêm logic upload file lên server
-        // uploadCVToServer(file);
+      const allowedTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+      if (!allowedTypes.includes(file.type)) {
+        alert('❌ Chỉ chấp nhận file PDF, DOC, hoặc DOCX!');
+        return;
       }
+
+      if (file.size > 5 * 1024 * 1024) { // 5MB
+        alert('❌ File không được vượt quá 5MB!');
+        return;
+      }
+
+      // Upload file lên server
+      uploadCVToServer(file);
     });
 
-    // Hàm upload CV lên server (cần implement)
+    // Hàm upload CV lên server qua fetch
     function uploadCVToServer(file) {
       const formData = new FormData();
-      formData.append('cv', file);
+      formData.append('cvFile', file); // tên "cvFile" phải khớp với upload.single('cvFile') trên server
 
-      // Ví dụ fetch API
-      fetch('/api/upload-cv', {
+      fetch('/cv/upload', {
         method: 'POST',
         body: formData
       })
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            alert('Upload CV thành công!');
+            alert(`✅ Upload thành công: ${data.fileName}`);
           } else {
-            alert('Upload CV thất bại!');
+            alert(`❌ Upload thất bại: ${data.message}`);
           }
         })
         .catch(error => {
-          console.error('Error:', error);
-          alert('Có lỗi xảy ra khi upload CV!');
+          console.error('Upload error:', error);
+          alert('❌ Có lỗi xảy ra khi upload CV!');
         });
     }
   </script>
